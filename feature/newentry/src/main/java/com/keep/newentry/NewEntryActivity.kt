@@ -1,10 +1,7 @@
 package com.keep.newentry
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.keep.newentry.databinding.ActivityNewEntryBinding
 
 class NewEntryActivity : AppCompatActivity() {
@@ -15,6 +12,8 @@ class NewEntryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNewEntryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setSupportActionBar(binding.appBarNewentry.newentryToolbar)
 
 
         /*enableEdgeToEdge()

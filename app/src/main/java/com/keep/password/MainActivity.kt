@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -12,7 +11,6 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.keep.newentry.NewEntryActivity
@@ -70,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         binding.navViewDrawer.setNavigationItemSelectedListener { view ->
             when (view.itemId) {
                 R.id.nav_recently -> {
-                    Toast.makeText(this, "Recentyly", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Recently", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.nav_favorite -> {

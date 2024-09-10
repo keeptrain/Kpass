@@ -14,31 +14,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- SearchBar -->
-            <com.google.android.material.search.SearchBar
-                android:id="@+id/searchBar"
-                style="@style/TextAppearance.Material3.SearchBar"
-                android:layout_width="0dp"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/newentry_toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="test"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonNew"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            <!-- Button "+ New" -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonNew"
-                style="@style/Widget.Material3.Button.IconButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="+ New"
-                app:layout_constraintBottom_toBottomOf="@id/searchBar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/searchBar"
-                app:layout_constraintTop_toTopOf="@id/searchBar" />
+           <com.google.android.material.button.MaterialButton
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:backgroundTint="@color/black"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
