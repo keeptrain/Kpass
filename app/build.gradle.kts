@@ -35,10 +35,13 @@ dependencies {
 
 
     // Core modules
+    implementation(project(":core:data"))
     implementation(project(":core:database"))
+    implementation(project(":core:designsystem"))
+
 
     // Feature modules
-    implementation(project(":feature:newEntry"))
+    implementation(project(":feature:newentry"))
     implementation(project(":feature:settings"))
 
     implementation(libs.androidx.core.ktx)

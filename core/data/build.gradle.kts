@@ -1,17 +1,17 @@
 plugins {
-    id("kpass.android.feature")
+    id("kpass.android.library")
+    id("kpass.android.hilt")
 }
 
-
 android {
-    namespace = "com.keep.newentry"
+    namespace = "com.keep.data"
 
     defaultConfig {
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
-
 
     buildTypes {
         release {
@@ -22,6 +22,7 @@ android {
             )
         }
     }
+
 }
 
 dependencies {
@@ -29,8 +30,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

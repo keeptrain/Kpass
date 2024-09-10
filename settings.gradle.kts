@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-
+include(":core:designsystem")
 
 
 pluginManagement {
@@ -35,8 +35,11 @@ rootProject.name = "Kpass"
 // Subprojects
 include(":app")
 
+include(":core:data")
 include(":core:database")
-include(":feature:newEntry")
+include(":core:model")
+
+include(":feature:newentry")
 include(":feature:settings")
 
 
