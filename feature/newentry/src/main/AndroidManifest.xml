@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--application android:theme="@style/ThemeKpass"
-        tools:replace="android:theme">
-        <activity
-            android:name=".NewEntryActivity"
-            android:exported="false" />
-
-    </application-->
+    <application android:theme="@style/ThemeKpass"/>
 
 </manifest>
