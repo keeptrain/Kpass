@@ -45,14 +45,14 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.navigation_settings) {
                 binding.appBarMain.appBarLayout.visibility = View.GONE
+                binding.appBarMain.chipCategoryMain.root.visibility = View.GONE
             } else {
                 binding.appBarMain.appBarLayout.visibility = View.VISIBLE
+                binding.appBarMain.chipCategoryMain.root.visibility = View.VISIBLE
             }
         }
 
         binding.searchView.setupWithSearchBar(binding.appBarMain.searchBar)
-
-        //setActionBar(bin)
 
         val drawerLayout : DrawerLayout = binding.drawerLayout
 

@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <!-- SearchBar -->
             <com.google.android.material.search.SearchBar
                 android:id="@+id/searchBar"
@@ -51,10 +50,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <include
+            android:id="@+id/chip_category_main"
+            layout="@layout/chip_category_main"/>
     </com.google.android.material.appbar.AppBarLayout>
-    <include
-        android:id="@+id/app_bar_mains"
-        layout="@layout/chip_category_main"
-       />
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
