@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             launchNewEntryActivity.launch(intent)
 
         }
-        binding.navViewDrawer.setNavigationItemSelectedListener { view ->
+        /*binding.navViewDrawer.setNavigationItemSelectedListener { view ->
             when (view.itemId) {
                 R.id.nav_recently -> {
                     Toast.makeText(this, "Recently", Toast.LENGTH_SHORT).show()
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else ->false
             }
-        }
+        }*/
 
 
         navView.setupWithNavController(navController)

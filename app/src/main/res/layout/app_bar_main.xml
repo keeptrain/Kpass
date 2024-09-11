@@ -9,12 +9,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <!-- ConstraintLayout to align SearchBar and Button -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
 
             <!-- SearchBar -->
             <com.google.android.material.search.SearchBar
@@ -49,6 +52,9 @@
 
 
     </com.google.android.material.appbar.AppBarLayout>
-
+    <include
+        android:id="@+id/app_bar_mains"
+        layout="@layout/chip_category_main"
+       />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -13,7 +13,14 @@ class NewEntryActivity : AppCompatActivity() {
         binding = ActivityNewEntryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.appBarNewentry.newentryToolbar)
+        with(binding.appBarNewentry.newentryToolbar) {
+            setSupportActionBar(this)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+
+
+
+
 
 
         /*enableEdgeToEdge()
@@ -24,4 +31,10 @@ class NewEntryActivity : AppCompatActivity() {
             insets
         }*/
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
 }
