@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.chip.ChipGroup
 import com.keep.newentry.NewEntryActivity
 import com.keep.password.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         }*/
 
 
+
         navView.setupWithNavController(navController)
 
 
@@ -91,6 +93,10 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun chipGroup() {
+        
     }
 
     override fun onSupportNavigateUp(): Boolean {
