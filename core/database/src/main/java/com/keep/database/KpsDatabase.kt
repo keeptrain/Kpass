@@ -5,6 +5,7 @@ import androidx.room.DatabaseConfiguration
 import androidx.room.InvalidationTracker
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteOpenHelper
+import com.keep.database.dao.CategoryDao
 import com.keep.database.model.CategoryEntity
 import com.keep.database.model.KpassEntity
 
@@ -14,4 +15,7 @@ import com.keep.database.model.KpassEntity
     version = 1,
     exportSchema = false
 )
-abstract class KpsDatabase : RoomDatabase()
+abstract class KpsDatabase : RoomDatabase() {
+    abstract fun categoryDao(): CategoryDao
+}
+

@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Kpass")
+@Entity(tableName = "kpass")
 data class KpassEntity (
 
     @PrimaryKey

@@ -1,16 +1,12 @@
 plugins {
     id("kpass.android.library")
-    id("kpass.android.hilt")
 }
 
 android {
-    namespace = "com.keep.data"
+    namespace = "com.keep.domain"
 }
 
 dependencies {
-
-    implementation(project(":core:database"))
-    implementation(project(":core:model"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

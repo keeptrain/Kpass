@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":core:domain")
+
+
 include(":core:designsystem")
 
 
