@@ -1,7 +1,7 @@
 package com.keep.domain.di
 
-import com.keep.domain.category.GetCategoryUseCase
-import com.keep.domain.category.GetCategoryUseCaseImpl
+import com.keep.domain.usecase.category.GetCategoryUseCase
+import com.keep.domain.usecase.category.GetCategoryUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

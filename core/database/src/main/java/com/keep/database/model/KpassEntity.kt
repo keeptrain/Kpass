@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.keep.model.Category
+import com.keep.model.Entry
 
 @Entity(
     tableName = "kpass",
@@ -37,4 +38,13 @@ data class KpassEntity (
 
     @ColumnInfo(name = "website")
     val website: String,
+)
+
+fun KpassEntity.toExternalModel() = Entry (
+    id = kpassId,
+    categoryId = categoryId,
+    title = title,
+    username = username,
+    password = password,
+    website = website
 )

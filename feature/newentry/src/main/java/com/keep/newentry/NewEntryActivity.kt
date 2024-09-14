@@ -1,12 +1,18 @@
 package com.keep.newentry
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.keep.newentry.databinding.ActivityNewEntryBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewEntryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNewEntryBinding
+
+    private val viewModel: NewEntryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,18 +24,16 @@ class NewEntryActivity : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
+        val listCategory = viewModel.getCategoryList()
+
+        val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, arrayOf(listCategory))
+        binding.spinnerCategory.adapter = adapter
 
 
 
 
 
-        /*enableEdgeToEdge()
-        setContentView(R.layout.activity_new_entry)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }*/
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

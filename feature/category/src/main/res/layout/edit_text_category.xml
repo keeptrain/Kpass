@@ -8,14 +8,12 @@
         android:id="@+id/edl_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
+        android:layout_margin="12dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_category"
-            android:hint="Enter category"
+            android:hint="@string/new_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"/>

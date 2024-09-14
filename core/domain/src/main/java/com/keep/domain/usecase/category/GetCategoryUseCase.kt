@@ -1,4 +1,4 @@
-package com.keep.domain.category
+package com.keep.domain.usecase.category
 
 import com.keep.model.Category
 import kotlinx.coroutines.flow.Flow

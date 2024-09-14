@@ -1,4 +1,4 @@
-package com.keep.domain.category
+package com.keep.domain.usecase.category
 
 import com.keep.domain.repository.CategoryRepository
 import com.keep.model.Category
@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class GetCategoryUseCaseImpl @Inject constructor (
     private val repository: CategoryRepository
-) : GetCategoryUseCase{
+) : GetCategoryUseCase {
     override fun getCategory(): List<Category> {
         return repository.getCategory().map() {
             it
