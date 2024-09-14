@@ -38,9 +38,12 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:database"))
     implementation(project(":core:designsystem"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:model"))
 
 
     // Feature modules
+    implementation(project(":feature:category"))
     implementation(project(":feature:newentry"))
     implementation(project(":feature:settings"))
 

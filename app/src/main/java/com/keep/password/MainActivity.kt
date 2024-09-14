@@ -16,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.ChipGroup
+import com.keep.category.CategoryActivity
 import com.keep.newentry.NewEntryActivity
 import com.keep.password.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             launchNewEntryActivity.launch(intent)
 
         }
-        /*binding.navViewDrawer.setNavigationItemSelectedListener { view ->
+        binding.navViewDrawer.setNavigationItemSelectedListener { view ->
             when (view.itemId) {
                 R.id.nav_recently -> {
                     Toast.makeText(this, "Recently", Toast.LENGTH_SHORT).show()
@@ -80,9 +81,14 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Pesan yang ingin ditampilkan", Toast.LENGTH_SHORT).show()
                     true
                 }
+                R.id.nav_category -> {
+                    val intent = Intent(this, CategoryActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
                 else ->false
             }
-        }*/
+        }
 
 
 

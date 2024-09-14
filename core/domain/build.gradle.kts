@@ -1,5 +1,6 @@
 plugins {
     id("kpass.android.library")
+    id("kpass.android.hilt")
 }
 
 android {
@@ -7,6 +8,8 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":core:model"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
