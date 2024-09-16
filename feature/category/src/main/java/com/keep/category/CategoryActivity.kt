@@ -3,12 +3,17 @@ package com.keep.category
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.keep.category.adapter.CategoryAdapter
 import com.keep.category.adapter.CategoryAdapterEvent
 import com.keep.category.databinding.ActivityCategoryBinding
@@ -24,10 +29,14 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
     private lateinit var categoryAdapter: CategoryAdapter
 
+    //private val testAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initialWork()
 
         setSupportActionBar(binding.toolbarCategory)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -35,7 +44,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
-        categoryAdapter = CategoryAdapter()
+
         recyclerView.adapter = categoryAdapter
 
         // Observing LiveData for category list
@@ -43,15 +52,20 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
             categoryAdapter.submitList(categoryList)  // Update RecyclerView
         }
 
-        initialWork()
     }
 
     private fun initialWork() {
+        // New category button
         with(binding) {
             btnAdd.setOnClickListener{
                 newCategoryDialog()
             }
         }
+        categoryAdapter = CategoryAdapter(
+            onMoreButtonClick = { category ->
+                bottomSheetDialog(category)
+            }
+        )
 
     }
 
@@ -63,12 +77,10 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
         with(alertDialogBuilder) {
             setView(dialogLayout)
             setPositiveButton(R.string.ok_positive_btn) { dialog, which ->
-                val categoryName =
-                    categoryEditText.text.toString() // Ambil teks setelah dialog ditampilkan
+                val categoryName = categoryEditText.text.toString() //
                 if (categoryName.isNotEmpty()) {
                     viewModel.insertCategory(categoryName)
                 } else {
-                    // Tambahkan logika error handling jika kategori kosong
                     Toast.makeText(
                         this@CategoryActivity,
                         "Category cannot be empty",
@@ -84,12 +96,46 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
         }
     }
 
+    private fun bottomSheetDialog(category: Category) {
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val bottomSheetLayout = bottomSheetDialog.layoutInflater.inflate(R.layout.bottom_sheet_dialog, null)
+
+        with(bottomSheetDialog) {
+            setContentView(bottomSheetLayout)
+
+            // Handle klik pada Edit
+            bottomSheetLayout.findViewById<TextView>(R.id.edit_option).setOnClickListener {
+                // Tambahkan aksi untuk Edit
+                Toast.makeText(this@CategoryActivity, "Edit clicked", Toast.LENGTH_SHORT).show()
+                bottomSheetDialog.dismiss() // Tutup BottomSheet setelah dipilih
+            }
+
+            // Handle klik pada Delete
+            bottomSheetLayout.findViewById<TextView>(R.id.delete_option).setOnClickListener {
+                // Tambahkan aksi untuk Delete
+                Toast.makeText(this@CategoryActivity, "Delete clicked", Toast.LENGTH_SHORT).show()
+                bottomSheetDialog.dismiss() // Tutup BottomSheet setelah dipilih
+            }
+
+            show()
+        }
+
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return true
     }
 
+    override fun addCategory() {
+        TODO("Not yet implemented")
+    }
+
     override fun editCategory(category: Category) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onMoreClick(category: Category) {
         TODO("Not yet implemented")
     }
 }

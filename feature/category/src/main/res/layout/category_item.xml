@@ -19,12 +19,13 @@
             app:icon="@drawable/ic_rounded_drag_indicator"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            style="@style/Widget.Material3.Button.IconButton.Filled"/>
+            style="@style/Widget.Material3.Button.IconButton"/>
 
         <TextView
             android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
             android:text="Category"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/drag_btn"
@@ -35,13 +36,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_rounded_more_vert"
-
+            app:rippleColor="@color/purple_200"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            style="@style/Widget.Material3.Button.IconButton.Filled"/>
-
-
+            style="@style/Widget.Material3.Button.IconButton"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    
 
 </layout>
