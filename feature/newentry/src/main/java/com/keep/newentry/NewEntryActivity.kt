@@ -24,12 +24,16 @@ class NewEntryActivity : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
-        val listCategory = viewModel.getCategoryList()
 
-        val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, arrayOf(listCategory))
-        binding.spinnerCategory.adapter = adapter
+        //val viewmodelname = viewModel.getCategoryName()
 
-
+        viewModel.category.observe(this) { categoryList ->
+            val name = categoryList.map {
+                it.name
+            }
+            val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, name)
+            binding.spinnerCategory.adapter= adapter
+        }
 
 
 

@@ -13,6 +13,7 @@ interface CategoryDao {
     @Query("SELECT * FROM category")
     fun getCategoryEntity(): Flow<List<CategoryEntity>>
 
+
     @Query("SELECT COUNT(*) FROM category")
     suspend fun getCategoryCount(): Int
 

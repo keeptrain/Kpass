@@ -7,10 +7,10 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import com.keep.database.dao.CategoryDao
 import com.keep.database.model.CategoryEntity
-import com.keep.database.model.KpassEntity
+import com.keep.database.model.EntryEntity
 
 @Database(entities = [
-    KpassEntity::class,
+    EntryEntity::class,
     CategoryEntity::class],
     version = 1,
     exportSchema = false

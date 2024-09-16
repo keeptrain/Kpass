@@ -1,9 +1,9 @@
 package com.keep.data.model
 
-import com.keep.database.model.KpassEntity
+import com.keep.database.model.EntryEntity
 import com.keep.model.Entry
 
-fun Entry.toEntity() = KpassEntity(
+fun Entry.toEntity() = EntryEntity(
     id,
     title,
     categoryId,

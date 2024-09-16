@@ -9,7 +9,7 @@ import com.keep.model.Category
 import com.keep.model.Entry
 
 @Entity(
-    tableName = "kpass",
+    tableName = "entry",
     foreignKeys = [
         ForeignKey(entity = CategoryEntity::class,
             parentColumns = arrayOf("categoryId"),
@@ -18,11 +18,11 @@ import com.keep.model.Entry
             onDelete = ForeignKey.CASCADE
         )
     ])
-data class KpassEntity (
+data class EntryEntity (
 
     @PrimaryKey
-    @ColumnInfo("kpassId")
-    val kpassId: String,
+    @ColumnInfo("entryId")
+    val entryId: String,
 
     @ColumnInfo("title")
     val title: String,
@@ -40,8 +40,8 @@ data class KpassEntity (
     val website: String,
 )
 
-fun KpassEntity.toExternalModel() = Entry (
-    id = kpassId,
+fun EntryEntity.toExternalModel() = Entry (
+    id = entryId,
     categoryId = categoryId,
     title = title,
     username = username,
