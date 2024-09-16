@@ -16,8 +16,6 @@ data class CategoryEntity (
 
     @ColumnInfo("name",)
     val name: String,
-
-
 )
 
 fun CategoryEntity.toExternalModel() = Category(

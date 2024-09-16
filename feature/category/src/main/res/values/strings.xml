@@ -1,4 +1,5 @@
 <resources>
     <string name="new_category">Input new category...</string>
-    <string name="ok_positive_btn">Input new category...</string>
+    <string name="ok_positive_btn">OK</string>
+    <string name="cancel_negative_btn">Cancel</string>
 </resources>

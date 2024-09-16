@@ -8,20 +8,26 @@ import com.keep.domain.usecase.category.GetCategoryUseCase
 import com.keep.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CategoryActivityViewModel @Inject constructor(
-    val useCase: GetCategoryUseCase
+    private val useCase: GetCategoryUseCase
 ): ViewModel() {
 
-    private val _categoryCount = MutableLiveData<Int>()
-    val categoryCount: LiveData<Int> get() = _categoryCount
+    // LiveData untuk kategori
+    private val _categories = MutableLiveData<Flow<List<Category>>>()
+    val categories: LiveData<Flow<List<Category>>> get() = _categories
 
-    fun getCategory(category: Category) {
-        useCase.getCategory()
+    fun getCategory() {
+        viewModelScope.launch {
+            val categoryList = useCase.getCategory()
+            _categories.postValue(categoryList)
+        }
     }
+
 
    fun insertCategory(categoryName: String) {
         viewModelScope.launch {
@@ -30,7 +36,6 @@ class CategoryActivityViewModel @Inject constructor(
             val newCategory = Category(id = newCategoryId, name = categoryName)
             useCase.insertCategory(newCategory)
         }
-
     }
 
     fun updateCategory(category: Category) {

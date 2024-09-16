@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewEntryViewModel @Inject constructor(
-
     private val categoryUseCase: GetCategoryUseCase
 ) : ViewModel() {
 

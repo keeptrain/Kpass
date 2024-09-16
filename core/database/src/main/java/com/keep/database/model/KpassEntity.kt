@@ -27,7 +27,7 @@ data class KpassEntity (
     @ColumnInfo("title")
     val title: String,
 
-    @ColumnInfo("categoryId")
+    @ColumnInfo("categoryId", index = true)
     val categoryId: String,
 
     @ColumnInfo(name = "username")

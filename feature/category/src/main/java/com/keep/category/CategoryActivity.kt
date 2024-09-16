@@ -1,5 +1,6 @@
 package com.keep.category
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.EditText
@@ -7,6 +8,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.keep.category.adapter.CategoryAdapter
 import com.keep.category.databinding.ActivityCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,10 +20,19 @@ class CategoryActivity : AppCompatActivity() {
 
     private val viewModel : CategoryActivityViewModel by viewModels()
 
+    private lateinit var categoryAdapter: CategoryAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val recyclerView = binding.recyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        categoryAdapter = CategoryAdapter()
+        recyclerView.adapter = categoryAdapter
+
+
 
         binding.btnAdd.setOnClickListener {
             val alertDialogBuilder = AlertDialog.Builder(this)
@@ -38,8 +50,9 @@ class CategoryActivity : AppCompatActivity() {
                         // Tambahkan logika error handling jika kategori kosong
                         Toast.makeText(this@CategoryActivity, "Category cannot be empty", Toast.LENGTH_SHORT).show()
                     }
+
                 }
-                setNegativeButton("Cancel") { dialog, which ->
+                setNegativeButton(R.string.cancel_negative_btn) { dialog, _ ->
                     dialog.dismiss()
                 }
                 show()

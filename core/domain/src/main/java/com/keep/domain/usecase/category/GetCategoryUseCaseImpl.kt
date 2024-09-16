@@ -9,8 +9,9 @@ import javax.inject.Inject
 class GetCategoryUseCaseImpl @Inject constructor (
     private val repository: CategoryRepository
 ) : GetCategoryUseCase {
-    override fun getCategory(): List<Category> {
-        return repository.getCategory().map() {
+
+    override fun getCategory(): Flow<List<Category>> {
+        return repository.getCategory().map {
             it
         }
     }
