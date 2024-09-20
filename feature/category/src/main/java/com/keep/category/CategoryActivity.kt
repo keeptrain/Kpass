@@ -11,6 +11,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet.Layout
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,6 +24,7 @@ import com.keep.category.adapter.CategoryAdapterEvent
 import com.keep.category.databinding.ActivityCategoryBinding
 import com.keep.model.Category
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
@@ -27,9 +33,9 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
     private val viewModel : CategoryActivityViewModel by viewModels()
 
-    private lateinit var categoryAdapter: CategoryAdapter
+    //private lateinit var categoryAdapter: CategoryAdapter
 
-    //private val testAdapter
+    private val testAdapter = CategoryAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,27 +51,37 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        recyclerView.adapter = categoryAdapter
+        recyclerView.adapter = testAdapter
 
         // Observing LiveData for category list
-        viewModel.categories.observe(this) { categoryList ->
-            categoryAdapter.submitList(categoryList)  // Update RecyclerView
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            }
         }
+
+
+
+
 
     }
 
     private fun initialWork() {
+
+       binding.btnAdd.setOnClickListener {
+           newCategoryDialog()
+       }
         // New category button
-        with(binding) {
+        /*with(binding) {
             btnAdd.setOnClickListener{
                 newCategoryDialog()
             }
-        }
-        categoryAdapter = CategoryAdapter(
+        }*/
+        /*categoryAdapter = CategoryAdapter(
             onMoreButtonClick = { category ->
                 bottomSheetDialog(category)
             }
-        )
+        )*/
 
     }
 
@@ -128,7 +144,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
     }
 
     override fun addCategory() {
-        TODO("Not yet implemented")
+        newCategoryDialog()
     }
 
     override fun editCategory(category: Category) {
@@ -136,6 +152,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
     }
 
     override fun onMoreClick(category: Category) {
-        TODO("Not yet implemented")
+
+        bottomSheetDialog(category)
     }
 }

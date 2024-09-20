@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.keep.category.adapter.CategoryAdapterEvent"/>
+
+        <variable
+            name="eventListener"
+            type="CategoryAdapterEvent" />
+    </data>
+
+<LinearLayout
     android:id="@+id/edt_category_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:onClick="@{(view) -> eventListener.addCategory()}">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edl_category"
@@ -21,3 +32,4 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>
+</layout>

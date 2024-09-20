@@ -6,6 +6,16 @@
 
         <import type="com.keep.model.Category" />
 
+        <import type="com.keep.category.adapter.CategoryAdapterEvent"/>
+
+        <variable
+            name="category"
+            type="Category" />
+
+        <variable
+            name="eventListener"
+            type="CategoryAdapterEvent" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,6 +45,7 @@
             android:id="@+id/more_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{(view) -> eventListener.onMoreClick(category)}"
             app:icon="@drawable/ic_rounded_more_vert"
             app:rippleColor="@color/purple_200"
             app:layout_constraintTop_toTopOf="parent"

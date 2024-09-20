@@ -39,4 +39,8 @@ class CategoryActivityViewModel @Inject constructor(
     fun deleteCategory(category: Category) {
         useCase.deleteCategory(category)
     }
+
+    fun generateCategoryAdapterList(list:List<Category>): List<Category> {
+        return list
+    }
 }
