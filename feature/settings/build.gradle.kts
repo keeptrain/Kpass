@@ -5,6 +5,11 @@ plugins {
 android {
     namespace = "com.keep.settings"
 
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+
+    }
 }
 
 dependencies {

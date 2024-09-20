@@ -153,6 +153,9 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
     override fun onMoreClick(category: Category) {
 
+        viewModel.categories.observe(this) {test ->
+            testAdapter.submitList(test)
+        }
         bottomSheetDialog(category)
     }
 }

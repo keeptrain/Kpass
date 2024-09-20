@@ -31,14 +31,10 @@ internal fun Project.configureKotlinAndroid(
             targetCompatibility = JavaVersion.VERSION_17
         }
 
-        dataBinding {
-            enable = true
-        }
 
-        buildFeatures {
-            viewBinding = true
 
-        }
+
+
 
     }
 

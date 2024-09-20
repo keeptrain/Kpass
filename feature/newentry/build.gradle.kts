@@ -6,6 +6,11 @@ plugins {
 android {
     namespace = "com.keep.newentry"
 
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+
+    }
 }
 
 dependencies {
