@@ -33,8 +33,6 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
     private val viewModel : CategoryActivityViewModel by viewModels()
 
-    //private lateinit var categoryAdapter: CategoryAdapter
-
     private val testAdapter = CategoryAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +52,6 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
         recyclerView.adapter = testAdapter
 
         // Observing LiveData for category list
-
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.categories.observe(this@CategoryActivity) {test ->
@@ -62,10 +59,6 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
                 }
             }
         }
-
-
-
-
 
     }
 

@@ -25,11 +25,15 @@ class CategoryActivityViewModel @Inject constructor(
 
     val categories: LiveData<List<Category>> = useCase.getCategory().asLiveData()
 
+    private val _insertResult = MutableLiveData<Boolean>()
+    val insertResult : LiveData<Boolean> = _insertResult
+
 
     fun insertCategoryWithFieldsValidation(category: Category) {
         val result = validationUseCase.validateTitle(category.name)
         if (result.successful) {
             useCase.insertCategory(category)
+            _insertResult.value = true
 
         }
     }
