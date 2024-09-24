@@ -8,6 +8,8 @@ interface CategoryAdapterEvent {
 
     fun editCategory(category: Category)
 
+    fun deleteCategory(category: Category)
+
     fun onMoreClick(category: Category)
 
 }

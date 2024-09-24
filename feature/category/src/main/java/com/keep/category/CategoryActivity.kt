@@ -57,6 +57,9 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.categories.observe(this@CategoryActivity) {test ->
+                    testAdapter.submitList(viewModel.generateCategoryAdapterList(test))
+                }
             }
         }
 
@@ -67,19 +70,13 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
     }
 
     private fun initialWork() {
-
-       binding.btnAdd.setOnClickListener {
-           NewCategoryDialog(this) { categoryName ->
-               viewModel.insertCategory(categoryName)
-           }.show()
-
-       }
         // New category button
-        /*with(binding) {
-            btnAdd.setOnClickListener{
-                newCategoryDialog()
-            }
-        }*/
+        binding.btnAdd.setOnClickListener {
+            NewCategoryDialog(this) {categoryName ->
+                viewModel.insertCategory(categoryName)
+            }.show()
+        }
+
         /*categoryAdapter = CategoryAdapter(
             onMoreButtonClick = { category ->
                 bottomSheetDialog(category)
@@ -100,6 +97,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
             // Handle klik pada Edit
             bottomSheetLayout.findViewById<TextView>(R.id.edit_option).setOnClickListener {
                 // Tambahkan aksi untuk Edit
+                viewModel.updateCategory(category)
                 Toast.makeText(this@CategoryActivity, "Edit clicked", Toast.LENGTH_SHORT).show()
                 bottomSheetDialog.dismiss() // Tutup BottomSheet setelah dipilih
             }
@@ -107,33 +105,37 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
             // Handle klik pada Delete
             bottomSheetLayout.findViewById<TextView>(R.id.delete_option).setOnClickListener {
                 // Tambahkan aksi untuk Delete
-                Toast.makeText(this@CategoryActivity, "Delete clicked", Toast.LENGTH_SHORT).show()
+                viewModel.deleteCategory(category)
+                Toast.makeText(this@CategoryActivity, "Delete ${category.name}", Toast.LENGTH_SHORT).show()
                 bottomSheetDialog.dismiss() // Tutup BottomSheet setelah dipilih
-            }
 
+            }
             show()
         }
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressedDispatcher.onBackPressed()
-        return true
-    }
 
     override fun addCategory() {
-
+        NewCategoryDialog(this) {categoryName->
+            viewModel.insertCategory(categoryName)
+        }.show()
     }
 
     override fun editCategory(category: Category) {
-        TODO("Not yet implemented")
+        bottomSheetDialog(category)
+    }
+
+    override fun deleteCategory(category: Category) {
+
     }
 
     override fun onMoreClick(category: Category) {
-
-        viewModel.categories.observe(this) {test ->
-            testAdapter.submitList(test)
-        }
         bottomSheetDialog(category)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }

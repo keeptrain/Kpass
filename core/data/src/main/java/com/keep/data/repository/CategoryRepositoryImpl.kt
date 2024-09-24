@@ -46,6 +46,8 @@ class CategoryRepositoryImpl @Inject constructor (
     }
 
     override fun deleteCategory(category: Category) {
-        categoryDao.deleteCategory(category.toEntity())
+        CoroutineScope(Dispatchers.IO).launch {
+            categoryDao.deleteCategory(category.toEntity())
+        }
     }
 }

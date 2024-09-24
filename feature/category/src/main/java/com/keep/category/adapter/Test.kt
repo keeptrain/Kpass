@@ -6,7 +6,7 @@ import androidx.appcompat.widget.AlertDialogLayout
 import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class Test() : AlertDialogLayout(null) {
+class Test :BottomSheetDialogFragment() {
 
 
 }

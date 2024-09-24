@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.keep.category.adapter.CategoryListAdapterItem
 import com.keep.domain.usecase.category.GetCategoryUseCase
 import com.keep.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,6 +33,10 @@ class CategoryActivityViewModel @Inject constructor(
         }
     }
 
+    fun insertCategoryWithFieldsValidation(category: Category) {
+
+    }
+
     fun updateCategory(category: Category) {
         useCase.updateCategory(category)
     }
@@ -40,7 +45,13 @@ class CategoryActivityViewModel @Inject constructor(
         useCase.deleteCategory(category)
     }
 
-    fun generateCategoryAdapterList(list:List<Category>): List<Category> {
-        return list
+    fun generateCategoryAdapterList(list:List<Category>): List<CategoryListAdapterItem> {
+        val array: MutableList<CategoryListAdapterItem> = mutableListOf()
+        if (list.isEmpty()) {
+            //array.add(CategoryListAdapterItem.)
+        } else {
+            list.forEach { array.add(CategoryListAdapterItem.CategoryItem(it)) }
+        }
+        return array
     }
 }

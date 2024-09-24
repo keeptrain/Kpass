@@ -1,17 +1,19 @@
 package com.keep.category
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 class NewCategoryDialog(
-    private val activity: AppCompatActivity,
+    private val activity: Context,
     private val onCategoryAdded: (String) -> Unit
 ) {
     fun show() {
         val alertDialogBuilder = AlertDialog.Builder(activity)
-        val dialogLayout = activity.layoutInflater.inflate(R.layout.edit_text_category, null)
+        val dialogLayout = LayoutInflater.from(activity).inflate(R.layout.edit_text_category,null)
         val categoryEditText = dialogLayout.findViewById<EditText>(R.id.edt_category)
 
         alertDialogBuilder.setView(dialogLayout)

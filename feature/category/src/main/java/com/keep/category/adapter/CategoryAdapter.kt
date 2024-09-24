@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.keep.category.CategoryActivity
@@ -17,34 +18,92 @@ import com.keep.category.databinding.CategoryItemBinding
 import com.keep.model.Category
 
 class CategoryAdapter (private val eventListener : CategoryAdapterEvent)
-    : ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
+    : ListAdapter<CategoryListAdapterItem, CategoryAdapter.CategoryViewHolder>(DIFFUTILS) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        val viewBinding = CategoryItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return CategoryViewHolder(viewBinding,eventListener)
-    }
-
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        val category = getItem(position)
-        holder.bind(category)
-    }
-
-    class CategoryViewHolder(
-        private val binding : CategoryItemBinding,
-        val eventListener: CategoryAdapterEvent
-    ) : RecyclerView.ViewHolder(binding.root) {
-        //private val textView: TextView = itemView.findViewById(com.keep.category.R.id.tv_category)
-        //private val moreBtn = itemView.findViewById<Button>(com.keep.category.R.id.more_btn)
-
-        fun bind(category: Category) {
-            with(binding) {
-                tvCategory.text = category.name
+        return when (EnumCategoryListAdapterViewType.getEnumByOrdinal(viewType)) {
+            EnumCategoryListAdapterViewType.CATEGORY -> {
+                CategoryViewHolder.CategoryItem(
+                    CategoryItemBinding.inflate(LayoutInflater.from(parent.context),parent,false),
+                    eventListener
+                )
             }
-            /*binding.tvCategory.text = category.name
-            moreBtn.setOnClickListener {
-                //onMoreButtonClick(category)
-            }*/
 
+            EnumCategoryListAdapterViewType.EMPTY -> TODO()
+        }
+        //val viewBinding = CategoryItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        //return CategoryViewHolder(viewBinding)
+    }
+
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) = when (holder) {
+        is CategoryViewHolder.CategoryItem -> {
+            holder.bind(
+                getItem(position) as CategoryListAdapterItem.CategoryItem)
+        }
+        /*val category = getItem(position)
+        when (holder) {
+            is CategoryViewHolder.CategoryItem -> {
+                holder.bind(
+                    getItem(position) as CategoryListAdapterItem.CategoryItem)
+            }
+        }*/
+        else -> {}
+    }
+
+    open class CategoryViewHolder(
+        binding : ViewBinding,
+
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        class CategoryItem (
+            private val binding: CategoryItemBinding,
+            private val eventListener : CategoryAdapterEvent) : CategoryViewHolder(binding){
+
+                fun bind(categoryItem : CategoryListAdapterItem.CategoryItem) {
+                    binding.category = categoryItem.category
+                    binding.eventListener = eventListener
+                    binding.tvCategory.text = categoryItem.category.name
+                }
+            }
+
+
+    }
+
+    companion object {
+        val DIFFUTILS = object : DiffUtil.ItemCallback<CategoryListAdapterItem>() {
+            override fun areItemsTheSame(
+                oldItem: CategoryListAdapterItem,
+                newItem: CategoryListAdapterItem
+            ): Boolean {
+                return when {
+                    oldItem is CategoryListAdapterItem.CategoryItem && newItem is CategoryListAdapterItem.CategoryItem -> {
+                        return when {
+                            oldItem.category.id != newItem.category.id -> false
+                            oldItem.category.id != newItem.category.name -> false
+                            else -> true
+                        }
+                    }
+
+                    else -> false
+                }
+            }
+
+            override fun areContentsTheSame(
+                oldItem: CategoryListAdapterItem,
+                newItem: CategoryListAdapterItem
+            ): Boolean {
+                return when {
+                    oldItem is CategoryListAdapterItem.CategoryItem && newItem is CategoryListAdapterItem.CategoryItem -> {
+                        return when {
+                            oldItem.category.id != newItem.category.id -> false
+                            oldItem.category.id != newItem.category.name -> false
+                            else -> true
+                        }
+                    }
+
+                    else -> false
+                }
+            }
         }
     }
 }
