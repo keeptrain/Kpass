@@ -69,7 +69,10 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
     private fun initialWork() {
 
        binding.btnAdd.setOnClickListener {
-           newCategoryDialog()
+           NewCategoryDialog(this) { categoryName ->
+               viewModel.insertCategory(categoryName)
+           }.show()
+
        }
         // New category button
         /*with(binding) {
@@ -85,32 +88,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
     }
 
-    private fun newCategoryDialog() {
-        val alertDialogBuilder = AlertDialog.Builder(this)
-        val dialogLayout = layoutInflater.inflate(R.layout.edit_text_category, null)
-        val categoryEditText = dialogLayout.findViewById<EditText>(R.id.edt_category)
 
-        with(alertDialogBuilder) {
-            setView(dialogLayout)
-            setPositiveButton(R.string.ok_positive_btn) { dialog, which ->
-                val categoryName = categoryEditText.text.toString() //
-                if (categoryName.isNotEmpty()) {
-                    viewModel.insertCategory(categoryName)
-                } else {
-                    Toast.makeText(
-                        this@CategoryActivity,
-                        "Category cannot be empty",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-            }
-            setNegativeButton(R.string.cancel_negative_btn) { dialog, _ ->
-                dialog.dismiss()
-            }
-            show()
-        }
-    }
 
     private fun bottomSheetDialog(category: Category) {
         val bottomSheetDialog = BottomSheetDialog(this)
@@ -144,7 +122,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
     }
 
     override fun addCategory() {
-        newCategoryDialog()
+
     }
 
     override fun editCategory(category: Category) {

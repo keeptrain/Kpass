@@ -10,5 +10,4 @@ interface CategoryAdapterEvent {
 
     fun onMoreClick(category: Category)
 
-
 }

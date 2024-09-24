@@ -37,7 +37,6 @@ class NewEntryActivity : AppCompatActivity() {
 
 
 
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
