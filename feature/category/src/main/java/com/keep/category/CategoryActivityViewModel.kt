@@ -10,10 +10,6 @@ import com.keep.domain.ui.category.CategoryValidationUseCase
 import com.keep.domain.usecase.category.GetCategoryUseCase
 import com.keep.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

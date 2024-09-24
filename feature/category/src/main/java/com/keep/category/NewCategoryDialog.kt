@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 
 class NewCategoryDialog(
     private val activity: Context,
