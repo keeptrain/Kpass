@@ -1,5 +1,7 @@
 package com.keep.domain.ui.category
 
-class CategoryValidationUseCase {
+import com.keep.domain.ValidationResult
 
+interface CategoryValidationUseCase {
+    fun validateTitle(title: String): ValidationResult
 }

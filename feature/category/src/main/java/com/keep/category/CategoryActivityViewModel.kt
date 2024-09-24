@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.keep.category.adapter.CategoryListAdapterItem
+import com.keep.domain.ui.category.CategoryValidationUseCase
 import com.keep.domain.usecase.category.GetCategoryUseCase
 import com.keep.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,11 +19,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoryActivityViewModel @Inject constructor(
-    private val useCase: GetCategoryUseCase
+    private val useCase: GetCategoryUseCase,
+    private val validationUseCase: CategoryValidationUseCase,
 ): ViewModel() {
 
     val categories: LiveData<List<Category>> = useCase.getCategory().asLiveData()
 
+
+    fun insertCategoryWithFieldsValidation(category: Category) {
+        val result = validationUseCase.validateTitle(category.name)
+        if (result.successful) {
+            useCase.insertCategory(category)
+
+        }
+    }
 
    fun insertCategory(categoryName: String) {
         viewModelScope.launch {
@@ -33,9 +43,6 @@ class CategoryActivityViewModel @Inject constructor(
         }
     }
 
-    fun insertCategoryWithFieldsValidation(category: Category) {
-
-    }
 
     fun updateCategory(category: Category) {
         useCase.updateCategory(category)
