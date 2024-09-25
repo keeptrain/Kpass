@@ -50,12 +50,14 @@ class NewCategoryDialog(
 
         val alertDialogBuilder = AlertDialog.Builder(activity)
 
+
         alertDialogBuilder.setView(binding.root)
             .setPositiveButton(R.string.ok_positive_btn) { dialog, p ->
                 val categoryName = binding.edtCategory.text.toString()
                 setupObserver()
                 category?.let {
                     val categoryCopy = it.copy(name = categoryName)
+                    binding.edtCategory.setText(it.name)
                     if (category != categoryCopy) {
                         viewModel.insertCategoryWithFieldsValidation(categoryCopy)
                     } else {

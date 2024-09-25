@@ -56,11 +56,24 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
     private fun initialWork() {
         // New category button
         binding.btnAdd.setOnClickListener {
-            NewCategoryDialog(this) { category ->
-                viewModel.insertCategory(category)
-            }.show()
+            showAddCategoryBottomSheet()
         }
 
+    }
+
+    // Fungsi untuk menampilkan AddCategoryDialogFragment
+    private fun showAddCategoryBottomSheet(category: Category? = null) {
+        val addCategoryDialogFragment = AddCategoryDialogFragment().apply {
+            arguments = Bundle().apply {
+                category?.let {
+                    putSerializable(AddCategoryDialogFragment.CATEGORY_EXTRA_KEY, it)
+                    viewModel.insertCategory(category)
+                }
+            }
+        }
+
+        // Menampilkan BottomSheetDialogFragment
+        addCategoryDialogFragment.show(supportFragmentManager, "AddCategoryDialogFragment")
     }
 
     private fun bottomSheetDialog(category: Category) {
@@ -92,15 +105,16 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
     }
 
     private fun showAddCategory(category: Category? = null) {
-        bundleOf(NewCategoryDialog.TASK_EXTRA_KEY to category)
+        bundleOf(AddCategoryDialogFragment.CATEGORY_EXTRA_KEY to category)
     }
 
 
     override fun addCategory() {
-        showAddCategory()
+        /*showAddCategory()
         NewCategoryDialog(this) { category ->
           viewModel.insertCategory(category)
-        }.show()
+        }.show()*/
+        showAddCategoryBottomSheet()
     }
 
     override fun editCategory(category: Category) {
