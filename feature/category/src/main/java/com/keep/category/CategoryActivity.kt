@@ -39,7 +39,6 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
-
         recyclerView.adapter = testAdapter
 
         // Observing LiveData for category list
@@ -60,16 +59,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
                 viewModel.insertCategory(categoryName)
             }.show()
         }
-
-        /*categoryAdapter = CategoryAdapter(
-            onMoreButtonClick = { category ->
-                bottomSheetDialog(category)
-            }
-        )*/
-
     }
-
-
 
     private fun bottomSheetDialog(category: Category) {
         val bottomSheetDialog = BottomSheetDialog(this)

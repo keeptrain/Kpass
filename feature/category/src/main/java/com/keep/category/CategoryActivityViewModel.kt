@@ -61,4 +61,5 @@ class CategoryActivityViewModel @Inject constructor(
         }
         return array
     }
+
 }
