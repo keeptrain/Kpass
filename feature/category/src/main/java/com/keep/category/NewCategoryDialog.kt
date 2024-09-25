@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.keep.category.databinding.BottomSheetDialogBinding
@@ -18,15 +19,15 @@ class NewCategoryDialog(
 
     private lateinit var binding : EditTextCategoryBinding
     fun show() {
+        binding = EditTextCategoryBinding.inflate(LayoutInflater.from(activity))
 
         val alertDialogBuilder = AlertDialog.Builder(activity)
-        val dialogLayout = LayoutInflater.from(activity).inflate(R.layout.edit_text_category,null)
-        val categoryEditText = dialogLayout.findViewById<TextInputEditText>(R.id.edt_category)
-        val categoryEditLayout = dialogLayout.findViewById<TextInputLayout>(R.id.edl_category)
 
-        alertDialogBuilder.setView(dialogLayout)
+        val addButtonLayout = LayoutInflater.from(activity).inflate(R.layout.add_category_button, null)
+
+        alertDialogBuilder.setView(binding.root)
             .setPositiveButton(R.string.ok_positive_btn) { _, _ ->
-                val categoryName = categoryEditText.text.toString()
+                val categoryName = binding.edtCategory.text.toString()
                 if (categoryName.isNotEmpty()) {
                     onCategoryAdded(categoryName)
                 } else {

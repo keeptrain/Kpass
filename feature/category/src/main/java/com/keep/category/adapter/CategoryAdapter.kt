@@ -20,7 +20,6 @@ class CategoryAdapter (private val eventListener : CategoryAdapterEvent)
                     eventListener
                 )
             }
-
             EnumCategoryListAdapterViewType.EMPTY -> TODO()
         }
         //val viewBinding = CategoryItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -42,9 +41,8 @@ class CategoryAdapter (private val eventListener : CategoryAdapterEvent)
         else -> {}
     }
 
-    open class CategoryViewHolder(
+    sealed class CategoryViewHolder(
         binding : ViewBinding,
-
     ) : RecyclerView.ViewHolder(binding.root) {
 
         class CategoryItem (

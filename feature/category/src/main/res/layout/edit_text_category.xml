@@ -4,6 +4,7 @@
     <data>
 
         <import type="com.keep.model.Category"/>
+
         <import type="com.keep.category.adapter.CategoryAdapterEvent"/>
 
         <variable
