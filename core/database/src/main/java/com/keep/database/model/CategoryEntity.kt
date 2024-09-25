@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.keep.model.Category
 import java.util.UUID
+import javax.annotation.Nonnull
 
 
 @Entity(tableName = "category")
@@ -12,7 +13,7 @@ data class CategoryEntity (
 
     @PrimaryKey
     @ColumnInfo("categoryId")
-    val id: String,
+    val id: String ,
 
     @ColumnInfo("name",)
     val name: String,

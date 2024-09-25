@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.keep.category.adapter.CategoryListAdapterItem
+import com.keep.common.util.Event
+import com.keep.domain.ValidationResult
 import com.keep.domain.ui.category.CategoryValidationUseCase
 import com.keep.domain.usecase.category.GetCategoryUseCase
 import com.keep.model.Category
@@ -21,28 +23,25 @@ class CategoryActivityViewModel @Inject constructor(
 
     val categories: LiveData<List<Category>> = useCase.getCategory().asLiveData()
 
-    private val _insertResult = MutableLiveData<Boolean>()
-    val insertResult : LiveData<Boolean> = _insertResult
+    private val _validationResult = MutableLiveData<Event<ValidationResult>>()
+    val validationResult : LiveData<Event<ValidationResult>> = _validationResult
 
+    private val _insertResult = MutableLiveData<Event<Boolean>>()
+    val insertResult : LiveData<Event<Boolean>> = _insertResult
 
     fun insertCategoryWithFieldsValidation(category: Category) {
         val result = validationUseCase.validateTitle(category.name)
         if (result.successful) {
             useCase.insertCategory(category)
-            _insertResult.value = true
-
+            _insertResult.value = Event(true)
+        } else {
+            _validationResult.value = Event(result)
         }
     }
 
-   fun insertCategory(categoryName: String) {
-        viewModelScope.launch {
-            val categoryCount = useCase.getCategoryCount()
-            val newCategoryId = "category-${categoryCount + 1}" // Generate ID baru
-            val newCategory = Category(id = newCategoryId, name = categoryName)
-            useCase.insertCategory(newCategory)
-        }
+    fun insertCategory(category: Category) {
+        useCase.insertCategory(category)
     }
-
 
     fun updateCategory(category: Category) {
         useCase.updateCategory(category)

@@ -5,6 +5,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -55,10 +56,11 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
     private fun initialWork() {
         // New category button
         binding.btnAdd.setOnClickListener {
-            NewCategoryDialog(this) {categoryName ->
-                viewModel.insertCategory(categoryName)
+            NewCategoryDialog(this) { category ->
+                viewModel.insertCategory(category)
             }.show()
         }
+
     }
 
     private fun bottomSheetDialog(category: Category) {
@@ -89,10 +91,15 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
     }
 
+    private fun showAddCategory(category: Category? = null) {
+        bundleOf(NewCategoryDialog.TASK_EXTRA_KEY to category)
+    }
+
 
     override fun addCategory() {
-        NewCategoryDialog(this) {categoryName->
-            viewModel.insertCategory(categoryName)
+        showAddCategory()
+        NewCategoryDialog(this) { category ->
+          viewModel.insertCategory(category)
         }.show()
     }
 
