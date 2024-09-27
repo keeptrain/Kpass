@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.keep.category.CategoryActivityViewModel
-import com.keep.category.NewCategoryDialog.Companion.TASK_EXTRA_KEY
 import com.keep.model.Category
 
 class Test :BottomSheetDialogFragment() {
