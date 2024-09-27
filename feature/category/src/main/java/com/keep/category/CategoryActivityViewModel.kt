@@ -29,6 +29,17 @@ class CategoryActivityViewModel @Inject constructor(
     private val _insertResult = MutableLiveData<Event<Boolean>>()
     val insertResult : LiveData<Event<Boolean>> = _insertResult
 
+    fun isCategoryNameExists(categoryName : String, callback: (Boolean) -> Unit) {
+       viewModelScope.launch {
+           useCase.getCategory().collect { categoryList ->
+               val exists = categoryList.any {
+                   it.name.equals(categoryName, ignoreCase = true)
+               }
+               callback(exists)
+           }
+       }
+    }
+
     fun insertCategoryWithFieldsValidation(category: Category) {
         val result = validationUseCase.validateTitle(category.name)
         if (result.successful) {

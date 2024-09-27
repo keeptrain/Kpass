@@ -48,19 +48,17 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
 
     private fun setupView() {
         val titleText = category?.let {
-            R.string.ok_positive_btn
-        } ?: R.string.new_category
+            R.string.title_edit_category
+        } ?: R.string.title_create_category
         binding.tvTitleDialog.text = requireContext().getString(titleText)
 
-
-        val addButton = category?.let {
-            R.string.ok_positive_btn
-        } ?: R.string.new_category
-        binding.btnAdd.text = requireContext().getString(addButton)
+        val addButtonText = category?.let {
+            R.string.save
+        } ?: R.string.add
+        binding.btnAdd.text = requireContext().getString(addButtonText)
 
         category?.let {
             binding.edtCategory.setText(it.name)
-
         }
     }
 
@@ -90,14 +88,18 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
     private fun setupListener() {
         binding.btnAdd.setOnClickListener {
             val categoryName = binding.edtCategory.text.toString()
-            category?.let {
-                val categoryCopy = it.copy(name = categoryName)
-                if (category != categoryCopy) {
-                    viewModel.insertCategoryWithFieldsValidation(categoryCopy)
+            viewModel.isCategoryNameExists(categoryName) { exist ->
+                if (exist) {
+                    binding.edlCategory.error = getString(R.string.exist_category)
                 } else {
-                    dismissNow()
+                    category?.let {
+                        val categoryCopy = it.copy(name = categoryName)
+                        if (category != categoryCopy) {
+                            viewModel.insertCategoryWithFieldsValidation(categoryCopy)
+                        }
+                    } ?: viewModel.insertCategoryWithFieldsValidation(Category(name = categoryName))
                 }
-            } ?: viewModel.insertCategoryWithFieldsValidation(Category(name = categoryName))
+            }
         }
     }
 }

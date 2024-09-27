@@ -104,10 +104,6 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
     }
 
-    private fun showAddCategory(category: Category? = null) {
-        bundleOf(AddCategoryDialogFragment.CATEGORY_EXTRA_KEY to category)
-    }
-
 
     override fun addCategory() {
         /*showAddCategory()
@@ -118,7 +114,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
     }
 
     override fun editCategory(category: Category) {
-        bottomSheetDialog(category)
+        showAddCategoryBottomSheet(category)
     }
 
     override fun deleteCategory(category: Category) {
