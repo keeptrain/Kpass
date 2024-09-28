@@ -1,6 +1,7 @@
 <resources>
     <string name="title_create_category">Create category</string>
     <string name="title_edit_category">Edit category</string>
+    <string name="close">Close</string>
     <string name="new_category">Input new category…</string>
     <string name="exist_category">Category already exist</string>
     <string name="add">Add</string>

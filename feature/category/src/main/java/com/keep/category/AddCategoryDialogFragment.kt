@@ -53,6 +53,10 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
         } ?: R.string.title_create_category
         binding.tvTitleDialog.text = requireContext().getString(titleText)
 
+        binding.ivClose.setOnClickListener {
+            dismiss()
+        }
+
         val addButtonText = category?.let {
             R.string.save
         } ?: R.string.add
