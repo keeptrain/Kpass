@@ -20,7 +20,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edl_category"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/layout_margin"
         app:errorEnabled="true"
@@ -43,9 +43,10 @@
         android:id="@+id/btn_Add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/layout_margin"
+        android:layout_marginEnd="20dp"
         android:text="Test"
         app:layout_constraintStart_toEndOf="@id/edl_category"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title_dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         style="@style/Widget.MaterialComponents.Button"/>

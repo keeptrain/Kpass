@@ -14,6 +14,7 @@ import com.keep.domain.usecase.category.GetCategoryUseCase
 import com.keep.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,6 +43,7 @@ class CategoryActivityViewModel @Inject constructor(
             _validationResult.value = Event(result)
         }
     }
+
 
     fun isCategoryNameExists(categoryName : String, callback: (Boolean) -> Unit){
         viewModelScope.launch {

@@ -28,6 +28,7 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
     }
 
 
+    @Suppress("DEPRECATION")
     private val category : Category? by lazy {
         if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.TIRAMISU) {
             arguments?.getSerializable(CATEGORY_EXTRA_KEY,Category::class.java)
@@ -88,6 +89,7 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
     private fun setupListener() {
         binding.btnAdd.setOnClickListener {
             val categoryName = binding.edtCategory.text.toString()
+
             viewModel.isCategoryNameExists(categoryName) { exist ->
                 if (exist) {
                     binding.edlCategory.error = getString(R.string.exist_category)
@@ -102,4 +104,5 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
 }

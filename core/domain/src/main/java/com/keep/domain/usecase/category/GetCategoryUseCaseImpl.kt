@@ -3,6 +3,7 @@ package com.keep.domain.usecase.category
 import com.keep.domain.repository.CategoryRepository
 import com.keep.model.Category
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -15,11 +16,6 @@ class GetCategoryUseCaseImpl @Inject constructor (
             it
         }
     }
-
-    override suspend fun getCategoryCount(): Int {
-        return repository.getCountCategory()
-    }
-
 
     override fun insertCategory(category: Category) {
         return repository.insertCategory(category)

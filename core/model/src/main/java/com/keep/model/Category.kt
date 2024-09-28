@@ -5,5 +5,5 @@ import java.util.UUID
 
 data class Category(
     val id: String = "category-${UUID.randomUUID()}",
-    val name: String
+    val name: String,
 ) : Serializable

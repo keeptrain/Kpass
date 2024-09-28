@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -27,12 +28,6 @@ class CategoryRepositoryImpl @Inject constructor (
                it.toExternalModel()
            }
        }.flowOn(Dispatchers.IO)
-    }
-
-    override suspend fun getCountCategory(): Int {
-        return withContext(Dispatchers.IO) {
-            categoryDao.getCategoryCount()
-        }
     }
 
     override fun insertCategory(category: Category) {
