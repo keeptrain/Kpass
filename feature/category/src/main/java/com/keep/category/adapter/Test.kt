@@ -25,7 +25,7 @@ class Test :BottomSheetDialogFragment() {
         }
     }
 
-    fun tests() = object : aaii {
+    fun tests() = object : aaii(test = "") {
         override fun tests(): Any {
             TODO("Not yet implemented")
         }
@@ -34,7 +34,15 @@ class Test :BottomSheetDialogFragment() {
 
 }
 
-interface aaii {
-    fun tests(): Any
+abstract class aaii (test: String) {
+    abstract fun tests(): Any
+}
+
+class aib (test:String): aaii(test = test) {
+    override fun tests(): Any {
+        TODO("Not yet implemented")
+    }
+
+
 }
 

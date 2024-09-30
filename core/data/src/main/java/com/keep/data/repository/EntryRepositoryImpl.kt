@@ -12,6 +12,7 @@ import javax.inject.Inject
 class EntryRepositoryImpl @Inject constructor(
     private val entryDao: EntryDao
 ) : EntryRepository {
+
     override fun getEntry(): List<Entry> {
         TODO("Not yet implemented")
     }
@@ -22,8 +23,6 @@ class EntryRepositoryImpl @Inject constructor(
                 it.toExternalModel()
             }
         }
-
-
     }
 
     override suspend fun insertEntry(entry: Entry) {

@@ -89,6 +89,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
                 viewModel.updateCategory(category)
                 Toast.makeText(this@CategoryActivity, "Edit clicked", Toast.LENGTH_SHORT).show()
                 bottomSheetDialog.dismiss() // Tutup BottomSheet setelah dipilih
+
             }
 
             // Handle klik pada Delete
@@ -97,7 +98,6 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
                 viewModel.deleteCategory(category)
                 Toast.makeText(this@CategoryActivity, "Delete ${category.name}", Toast.LENGTH_SHORT).show()
                 bottomSheetDialog.dismiss() // Tutup BottomSheet setelah dipilih
-
             }
             show()
         }
@@ -106,10 +106,6 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
 
     override fun addCategory() {
-        /*showAddCategory()
-        NewCategoryDialog(this) { category ->
-          viewModel.insertCategory(category)
-        }.show()*/
         showAddCategoryBottomSheet()
     }
 

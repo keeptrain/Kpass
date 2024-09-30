@@ -46,6 +46,7 @@ class CategoryActivityViewModel @Inject constructor(
 
 
     fun isCategoryNameExists(categoryName : String, callback: (Boolean) -> Unit){
+
         viewModelScope.launch {
             useCase.getCategory().collect { categoryList ->
                 val exists = categoryList.any {

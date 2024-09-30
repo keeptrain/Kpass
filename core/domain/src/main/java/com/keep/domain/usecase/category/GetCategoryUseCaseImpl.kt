@@ -17,6 +17,14 @@ class GetCategoryUseCaseImpl @Inject constructor (
         }
     }
 
+
+    suspend fun isCategoryNameExists(categoryName: String): Boolean { // Pastikan tipe datanya benar
+        return repository.categoryExists().firstOrNull { category ->
+            category.name.equals(categoryName, ignoreCase = true)
+        } != null
+    }
+
+
     override fun insertCategory(category: Category) {
         return repository.insertCategory(category)
     }

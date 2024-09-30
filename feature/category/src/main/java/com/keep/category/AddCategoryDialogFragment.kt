@@ -21,12 +21,12 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
     }
 
 
+
     private lateinit var binding : FragmentAddCategoryDialogBinding
 
     private val viewModel by lazy {
         ViewModelProvider(requireActivity())[CategoryActivityViewModel::class.java]
     }
-
 
     @Suppress("DEPRECATION")
     private val category : Category? by lazy {

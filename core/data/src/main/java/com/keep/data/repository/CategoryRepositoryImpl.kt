@@ -30,6 +30,7 @@ class CategoryRepositoryImpl @Inject constructor (
        }.flowOn(Dispatchers.IO)
     }
 
+
     override fun insertCategory(category: Category) {
         CoroutineScope(Dispatchers.IO).launch {
             categoryDao.insertCategory(category.toEntity())
