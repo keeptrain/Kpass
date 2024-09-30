@@ -13,6 +13,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             pluginManager.apply {
                 apply("kpass.android.library")
                 apply("kpass.android.hilt")
+                apply("kpass.android.navigation")
             }
 
             extensions.configure<LibraryExtension>() {

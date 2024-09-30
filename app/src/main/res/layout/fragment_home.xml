@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.keep.password.ui.home.HomeFragment">
 
+
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_home"
         android:layout_width="match_parent"

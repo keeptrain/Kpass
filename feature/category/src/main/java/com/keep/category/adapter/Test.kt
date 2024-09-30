@@ -32,6 +32,7 @@ class Test :BottomSheetDialogFragment() {
 
     }
 
+
 }
 
 abstract class aaii (test: String) {
@@ -42,7 +43,13 @@ class aib (test:String): aaii(test = test) {
     override fun tests(): Any {
         TODO("Not yet implemented")
     }
+}
 
+class uias (val tests : Int, test2: String) {
 
+}
+
+fun main() {
+    val uais = uias(12,"")
 }
 

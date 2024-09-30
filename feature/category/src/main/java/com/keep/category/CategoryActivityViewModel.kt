@@ -11,6 +11,7 @@ import com.keep.common.util.Event
 import com.keep.domain.ValidationResult
 import com.keep.domain.ui.category.CategoryValidationUseCase
 import com.keep.domain.usecase.category.GetCategoryUseCase
+import com.keep.domain.usecase.entry.GetEntryUseCase
 import com.keep.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
@@ -38,7 +39,6 @@ class CategoryActivityViewModel @Inject constructor(
         if (result.successful ) {
             useCase.insertCategory(category)
             _insertResult.value = Event(true)
-
         } else {
             _validationResult.value = Event(result)
         }

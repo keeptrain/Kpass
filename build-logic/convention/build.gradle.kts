@@ -47,6 +47,10 @@ gradlePlugin {
             id = "kpass.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+        register("androidNavigation") {
+            id = "kpass.android.navigation"
+            implementationClass = "AndroidNavigationConventionPlugin"
+        }
         register("androidRoom") {
             id = "kpass.android.room"
             implementationClass = "AndroidRoomConventionPlugin"
