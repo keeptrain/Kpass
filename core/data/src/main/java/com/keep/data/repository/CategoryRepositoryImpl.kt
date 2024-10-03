@@ -1,6 +1,8 @@
 package com.keep.data.repository
 
 import com.keep.data.model.toEntity
+import com.keep.database.BinDispatcher
+import com.keep.database.Dispatcher
 import com.keep.database.dao.CategoryDao
 import com.keep.database.model.CategoryEntity
 import com.keep.database.model.toExternalModel
@@ -18,7 +20,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor (
-    //private val ioDispatcher: CoroutineDispatcher,
+    @Dispatcher(BinDispatcher.IO) private val ioDispatcher: CoroutineDispatcher,
     private val categoryDao: CategoryDao,
 ) : CategoryRepository {
 
@@ -27,12 +29,12 @@ class CategoryRepositoryImpl @Inject constructor (
            it.map {
                it.toExternalModel()
            }
-       }.flowOn(Dispatchers.IO)
+       }.flowOn(ioDispatcher)
     }
 
 
     override fun insertCategory(category: Category) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(ioDispatcher).launch {
             categoryDao.insertCategory(category.toEntity())
         }
     }
@@ -42,7 +44,7 @@ class CategoryRepositoryImpl @Inject constructor (
     }
 
     override fun deleteCategory(category: Category) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(ioDispatcher).launch {
             categoryDao.deleteCategory(category.toEntity())
         }
     }

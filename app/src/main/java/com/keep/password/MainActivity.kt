@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.createGraph
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -38,14 +39,6 @@ class MainActivity : AppCompatActivity() {
         val navControllers = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navControllers.navController
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home,
-                R.id.navigation_dashboard,
-                R.id.navigation_settings
-            ), binding.drawerLayout
-        )
-
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.navigation_settings) {
                 binding.appBarMain.appBarLayout.visibility = View.GONE
@@ -63,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.searchBar.setNavigationOnClickListener {
             drawerLayout.open()
         }
+
 
         binding.appBarMain.buttonNew.setOnClickListener {
             val intent = Intent(this, NewEntryActivity::class.java)
@@ -94,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
 
     private val launchNewEntryActivity = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
