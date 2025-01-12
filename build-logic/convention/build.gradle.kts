@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -15,10 +16,9 @@ kotlin {
     jvmToolchain(17)
 }
 
-
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
@@ -55,5 +55,12 @@ gradlePlugin {
             id = "kpass.android.room"
             implementationClass = "AndroidRoomConventionPlugin"
         }
+    }
+}
+
+tasks {
+    validatePlugins {
+        enableStricterValidation = true
+        failOnWarning = true
     }
 }

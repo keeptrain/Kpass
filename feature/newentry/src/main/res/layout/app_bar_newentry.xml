@@ -8,13 +8,12 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/purple_200">
+        android:backgroundTint="@color/teal_200">
 
         <!-- ConstraintLayout to align SearchBar and Button -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/newentry_toolbar"
@@ -30,23 +29,20 @@
                android:layout_height="wrap_content"
                android:layout_margin="5dp"
                android:backgroundTint="@color/purple_500"
-               android:text="S"
+               android:text="@string/add"
                app:layout_constraintBottom_toTopOf="@id/edt_title"
                app:layout_constraintTop_toTopOf="parent"
                app:layout_constraintEnd_toEndOf="parent"
                style="@style/Widget.Material3.Button.IconButton.Filled"/>
 
-
-
             <EditText
                 android:id="@+id/edt_title"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
+                android:layout_width="260dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="25dp"
                 android:hint="@string/title"
                 android:autofillHints="name"
                 android:inputType="text"
-
                 app:layout_constraintTop_toBottomOf="@id/newentry_toolbar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

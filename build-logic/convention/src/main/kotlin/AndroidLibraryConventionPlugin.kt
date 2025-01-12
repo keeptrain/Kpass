@@ -15,7 +15,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.android")
             }
 
-
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
                 defaultConfig.minSdk = libs.findVersion("minSdk").get().toString().toInt()

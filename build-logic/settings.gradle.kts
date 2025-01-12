@@ -3,7 +3,7 @@
 dependencyResolutionManagement {
     repositories {
         google()
-        gradlePluginPortal()
+        //gradlePluginPortal()
         mavenCentral()
     }
     versionCatalogs {
