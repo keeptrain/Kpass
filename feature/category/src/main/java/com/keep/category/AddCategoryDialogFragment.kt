@@ -1,6 +1,5 @@
 package com.keep.category
 
-import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.keep.category.databinding.FragmentAddCategoryDialogBinding
 import com.keep.model.Category
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddCategoryDialogFragment : BottomSheetDialogFragment() {
@@ -19,8 +17,6 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
     companion object {
         const val CATEGORY_EXTRA_KEY = "category_extra"
     }
-
-
 
     private lateinit var binding : FragmentAddCategoryDialogBinding
 
@@ -51,6 +47,7 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
         val titleText = category?.let {
             R.string.title_edit_category
         } ?: R.string.title_create_category
+
         binding.tvTitleDialog.text = requireContext().getString(titleText)
 
         binding.ivClose.setOnClickListener {
@@ -83,17 +80,24 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
             insertResult.observe(viewLifecycleOwner) { event ->
                 event.getContentIfNotHandled()?.let { result ->
                     if (result) {
-                        dismissNow()
+                        dismissAllowingStateLoss()
                     }
                 }
             }
         }
     }
 
+    fun generateNewCategoryId(lastId: String?): String {
+        if (lastId.isNullOrEmpty()) return "category-1"
+
+        // Ekstrak angka dari format `category-<number>`
+        val lastNumber = lastId.substringAfter("category-").toIntOrNull() ?: 0
+        return "category-${lastNumber + 1}"
+    }
+
     private fun setupListener() {
         binding.btnAdd.setOnClickListener {
             val categoryName = binding.edtCategory.text.toString()
-
             viewModel.isCategoryNameExists(categoryName) { exist ->
                 if (exist) {
                     binding.edlCategory.error = getString(R.string.exist_category)
@@ -103,10 +107,16 @@ class AddCategoryDialogFragment : BottomSheetDialogFragment() {
                         if (category != categoryCopy) {
                             viewModel.insertCategoryWithFieldsValidation(categoryCopy)
                         }
-                    } ?: viewModel.insertCategoryWithFieldsValidation(Category(name = categoryName))
+                    } ?: viewModel.insertCategoryWithFieldsValidation(Category(
+                        name = categoryName))
                 }
             }
         }
     }
 
+
+
+}
+
+fun main() {
 }

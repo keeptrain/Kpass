@@ -55,8 +55,6 @@ class CategoryAdapter (private val eventListener : CategoryAdapterEvent)
                     binding.tvCategory.text = categoryItem.category.name
                 }
             }
-
-
     }
 
     companion object {
@@ -69,7 +67,7 @@ class CategoryAdapter (private val eventListener : CategoryAdapterEvent)
                     oldItem is CategoryListAdapterItem.CategoryItem && newItem is CategoryListAdapterItem.CategoryItem -> {
                         return when {
                             oldItem.category.id != newItem.category.id -> false
-                            oldItem.category.id != newItem.category.name -> false
+                            oldItem.category.name != newItem.category.name -> false
                             else -> true
                         }
                     }
@@ -86,7 +84,7 @@ class CategoryAdapter (private val eventListener : CategoryAdapterEvent)
                     oldItem is CategoryListAdapterItem.CategoryItem && newItem is CategoryListAdapterItem.CategoryItem -> {
                         return when {
                             oldItem.category.id != newItem.category.id -> false
-                            oldItem.category.id != newItem.category.name -> false
+                            oldItem.category.name != newItem.category.name -> false
                             else -> true
                         }
                     }

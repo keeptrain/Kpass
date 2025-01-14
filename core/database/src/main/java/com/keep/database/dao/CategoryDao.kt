@@ -13,8 +13,8 @@ interface CategoryDao {
     @Query("SELECT * FROM category")
     fun getCategoryEntity(): Flow<List<CategoryEntity>>
 
-    @Query("SELECT COUNT(*) FROM category")
-    suspend fun getCategoryCount(): Int
+    @Query("SELECT name FROM category ORDER BY name DESC LIMIT 1")
+    suspend fun getLastCategoryId(): String?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategory(categoryEntities: CategoryEntity)

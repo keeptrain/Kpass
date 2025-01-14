@@ -5,11 +5,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavGraphBuilder
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.keep.category.adapter.CategoryAdapter
@@ -17,7 +12,7 @@ import com.keep.category.adapter.CategoryAdapterEvent
 import com.keep.category.databinding.ActivityCategoryBinding
 import com.keep.model.Category
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
@@ -44,12 +39,13 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
         recyclerView.adapter = categoryAdapter
 
         // Observing LiveData for category list
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.categories.observe(this@CategoryActivity) {test ->
-                    categoryAdapter.submitList(viewModel.generateCategoryAdapterList(test))
-                }
-            }
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//            }
+//        }
+
+        viewModel.categories.observe(this@CategoryActivity) { test ->
+            categoryAdapter.submitList(viewModel.generateCategoryAdapterList(test))
         }
 
     }
@@ -83,12 +79,13 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
         with(bottomSheetDialog) {
             setContentView(bottomSheetLayout)
+            show()
 
             // Handle klik pada Edit
             bottomSheetLayout.findViewById<TextView>(R.id.edit_option).setOnClickListener {
                 // Tambahkan aksi untuk Edit
                 viewModel.updateCategory(category)
-                Toast.makeText(this@CategoryActivity, "Edit clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CategoryActivity, "Edit clicked ${category.name}", Toast.LENGTH_SHORT).show()
                 bottomSheetDialog.dismiss() // Tutup BottomSheet setelah dipilih
 
             }
@@ -98,9 +95,9 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
                 // Tambahkan aksi untuk Delete
                 viewModel.deleteCategory(category)
                 Toast.makeText(this@CategoryActivity, "Delete ${category.name}", Toast.LENGTH_SHORT).show()
-                bottomSheetDialog.dismiss() // Tutup BottomSheet setelah dipilih
+                dismiss()
             }
-            show()
+            //show()
         }
 
     }
@@ -115,7 +112,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
     }
 
     override fun deleteCategory(category: Category) {
-
+        //viewModel.deleteCategory(category)
     }
 
     override fun onMoreClick(category: Category) {
