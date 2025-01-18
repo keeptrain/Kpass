@@ -3,7 +3,6 @@ package com.keep.domain.usecase.category
 import com.keep.domain.repository.CategoryRepository
 import com.keep.model.Category
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -16,14 +15,6 @@ class GetCategoryUseCaseImpl @Inject constructor (
             it
         }
     }
-
-
-    /*suspend fun isCategoryNameExists(categoryName: String): Boolean { // Pastikan tipe datanya benar
-        return repository.categoryExists().firstOrNull { category ->
-            category.name.equals(categoryName, ignoreCase = true)
-        } != null
-    }*/
-
 
     override fun insertCategory(category: Category) {
         return repository.insertCategory(category)

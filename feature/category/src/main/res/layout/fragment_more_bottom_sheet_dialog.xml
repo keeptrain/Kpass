@@ -10,22 +10,22 @@
         android:id="@+id/edit_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit"
+        android:text="@string/edit"
         android:padding="12dp"
         android:textSize="16sp"
         android:gravity="center_vertical"
-        android:drawablePadding="8dp"
-        app:drawableStartCompat="@drawable/ic_rounded_drag_indicator" />
+        android:drawablePadding="@dimen/layout_margin"
+        app:drawableStartCompat="@drawable/ic_outline_pencil" />
 
     <TextView
         android:id="@+id/delete_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete"
+        android:text="@string/delete"
         android:padding="12dp"
         android:textSize="16sp"
         android:gravity="center_vertical"
-        android:drawableStart="@drawable/ic_rounded_more_vert"
-        android:drawablePadding="8dp" />
+        android:drawablePadding="@dimen/layout_margin"
+        app:drawableStartCompat="@drawable/ic_outline_trash" />
 
 </LinearLayout>

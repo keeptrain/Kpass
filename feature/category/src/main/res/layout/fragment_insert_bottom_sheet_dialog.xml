@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="10dp">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_title_dialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/layout_margin"
-        android:text="test"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/edl_category"
-        />
 
     <!-- Close Icon -->
     <ImageView
         android:id="@+id/iv_close"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_margin="@dimen/layout_margin"
         android:src="@drawable/ic_rounded_close"
         android:contentDescription="@string/close"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_title_dialog"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_title_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/dialog_title"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/iv_close"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edl_category"
@@ -43,7 +44,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_category"
-            android:hint="@string/new_category"
+            android:hint="@string/hint_create_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"/>
@@ -54,11 +55,11 @@
         android:id="@+id/btn_Add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:text="Test"
+        android:layout_marginEnd="@dimen/layout_margin"
+        android:text="@string/add"
         app:layout_constraintStart_toEndOf="@id/edl_category"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_dialog"
+        app:layout_constraintTop_toTopOf="@id/tv_title_dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         style="@style/Widget.MaterialComponents.Button"/>
 

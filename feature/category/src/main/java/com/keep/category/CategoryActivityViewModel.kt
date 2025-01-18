@@ -6,15 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.keep.category.adapter.CategoryListAdapterItem
-import com.keep.common.ui.UiText
 import com.keep.common.util.Event
 import com.keep.domain.ValidationResult
 import com.keep.domain.ui.category.CategoryValidationUseCase
 import com.keep.domain.usecase.category.GetCategoryUseCase
-import com.keep.domain.usecase.entry.GetEntryUseCase
 import com.keep.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,29 +30,8 @@ class CategoryActivityViewModel @Inject constructor(
     private val _insertResult = MutableLiveData<Event<Boolean>>()
     val insertResult : LiveData<Event<Boolean>> = _insertResult
 
-
-    fun insertCategoryWithFieldsValidation(category: Category) {
-        val result = validationUseCase.validateTitle(category.name)
-        if (result.successful ) {
-            useCase.insertCategory(category)
-            _insertResult.value = Event(true)
-        } else {
-            _validationResult.value = Event(result)
-        }
-    }
-
-
-    fun isCategoryNameExists(categoryName : String, callback: (Boolean) -> Unit){
-
-        viewModelScope.launch {
-            useCase.getCategory().collect { categoryList ->
-                val exists = categoryList.any {
-                    it.name.equals(categoryName, ignoreCase = true)
-                }
-                callback(exists)
-            }
-        }
-    }
+    private val _resetErrorEvent = MutableLiveData<Event<Unit>>()
+    val resetErrorEvent: LiveData<Event<Unit>> = _resetErrorEvent
 
     fun insertCategory(category: Category) {
         useCase.insertCategory(category)
@@ -69,12 +45,35 @@ class CategoryActivityViewModel @Inject constructor(
         useCase.deleteCategory(category)
     }
 
-    fun generateCategoryAdapterList(list:List<Category>): List<CategoryListAdapterItem> {
+    fun insertCategoryWithFieldsValidation(category: Category) {
+        val result = validationUseCase.validateTitle(category.name)
+        if (result.successful) {
+            viewModelScope.launch {
+                useCase.insertCategory(category.copy())
+                _insertResult.value = Event(true)
+            }
+        } else {
+            _validationResult.value = Event(result)
+        }
+    }
+
+    fun isCategoryNameExists(categoryName : String, callback: (Boolean) -> Unit){
+        viewModelScope.launch {
+            val exists = useCase.getCategory().firstOrNull()?.any {
+                it.name.equals(categoryName, ignoreCase = true)
+            } == true
+            callback(exists)
+        }
+    }
+
+    fun generateCategoryAdapterList(list: List<Category>): List<CategoryListAdapterItem> {
         val array: MutableList<CategoryListAdapterItem> = mutableListOf()
         if (list.isEmpty()) {
-            //array.add(CategoryListAdapterItem.)
+            listOf(CategoryListAdapterItem.EmptyItem())
         } else {
-            list.forEach { array.add(CategoryListAdapterItem.CategoryItem(it)) }
+            list.forEach {
+                array.add(CategoryListAdapterItem.CategoryItem(it))
+            }
         }
         return array
     }
