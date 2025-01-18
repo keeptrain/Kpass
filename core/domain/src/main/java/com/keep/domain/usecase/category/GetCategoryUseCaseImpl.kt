@@ -16,18 +16,6 @@ class GetCategoryUseCaseImpl @Inject constructor (
         }
     }
 
-    override suspend fun getLastCategoryId(): String? {
-        return repository.getLastCategoryId()
-    }
-
-
-    /*suspend fun isCategoryNameExists(categoryName: String): Boolean { // Pastikan tipe datanya benar
-        return repository.categoryExists().firstOrNull { category ->
-            category.name.equals(categoryName, ignoreCase = true)
-        } != null
-    }*/
-
-
     override fun insertCategory(category: Category) {
         return repository.insertCategory(category)
     }

@@ -11,7 +11,7 @@ data class CategoryEntity (
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo("categoryId")
-    val id: Int? = 1,
+    val id: Int?,
 
     @ColumnInfo("name")
     val name: String,

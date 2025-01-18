@@ -28,10 +28,6 @@ class CategoryRepositoryImpl @Inject constructor (
        }.flowOn(ioDispatcher)
     }
 
-    override suspend fun getLastCategoryId(): String? {
-        return categoryDao.getLastCategoryId()
-    }
-
     override fun insertCategory(category: Category) {
         CoroutineScope(ioDispatcher).launch {
             categoryDao.insertCategory(category.toEntity())

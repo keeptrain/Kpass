@@ -2,10 +2,18 @@
     <string name="title_create_category">Create category</string>
     <string name="title_edit_category">Edit category</string>
     <string name="close">Close</string>
-    <string name="new_category">Input new category…</string>
+    <string name="hint_create_category">Input new category</string>
+    <string name="hint_edit_category">Change categor name</string>
     <string name="exist_category">Category already exist</string>
     <string name="add">Add</string>
     <string name="save">Save</string>
     <string name="ok_positive_btn">OK</string>
     <string name="cancel_negative_btn">Cancel</string>
+    <string name="add_category">Add Category</string>
+    <string name="non_active">Non Active</string>
+    <string name="active">Active</string>
+    <string name="dialog_title">Dialog title</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="category_name">Category name</string>
 </resources>
