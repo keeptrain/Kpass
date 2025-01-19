@@ -21,7 +21,6 @@
             <!-- SearchBar -->
             <com.google.android.material.search.SearchBar
                 android:id="@+id/searchBar"
-                style="@style/TextAppearance.Material3.SearchBar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/search_hint"
@@ -29,23 +28,27 @@
                 app:layout_constraintEnd_toStartOf="@+id/buttonNew"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="@drawable/ic_rounded_menu_24" />
+                app:navigationIcon="@drawable/ic_rounded_menu_24"
+                style="@style/TextAppearance.Material3.SearchBar"/>
 
             <!-- Button "+ New" -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonNew"
-                style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin"
                 android:backgroundTint="@color/black"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="+ New"
+                android:text="@string/add"
+                android:textAllCaps="true"
                 android:textColor="@color/white"
+                app:icon="@drawable/ic_rounded_add"
                 app:layout_constraintBottom_toBottomOf="@id/searchBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/searchBar"
-                app:layout_constraintTop_toTopOf="@id/searchBar" />
+                app:layout_constraintTop_toTopOf="@id/searchBar"
+                style="@style/Widget.Material3.Button.IconButton"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
