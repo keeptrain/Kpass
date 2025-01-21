@@ -22,42 +22,47 @@
             <com.google.android.material.search.SearchBar
                 android:id="@+id/searchBar"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:hint="@string/search_hint"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/buttonNew"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/ic_rounded_menu_24"
-                style="@style/TextAppearance.Material3.SearchBar"/>
+                style="@style/CustomSearchBarStyle"/>
 
             <!-- Button "+ New" -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonNew"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/layout_margin"
-                android:backgroundTint="@color/black"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/material_dynamic_neutral20"
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/add"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 app:icon="@drawable/ic_rounded_add"
-                app:layout_constraintBottom_toBottomOf="@id/searchBar"
+                app:iconTint="@color/white"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/searchBar"
-                app:layout_constraintTop_toTopOf="@id/searchBar"
+                app:layout_constraintTop_toTopOf="parent"
                 style="@style/Widget.Material3.Button.IconButton"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <include
             android:id="@+id/chip_category_main"
             layout="@layout/chip_category_main"/>
+
     </com.google.android.material.appbar.AppBarLayout>
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
