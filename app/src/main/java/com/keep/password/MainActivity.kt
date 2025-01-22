@@ -7,14 +7,10 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.createGraph
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.keep.category.CategoryActivity
 import com.keep.newentry.NewEntryActivity
 import com.keep.password.databinding.ActivityMainBinding
@@ -34,43 +30,40 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
+        appBarMain()
 
-        val navControllers = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
-        navController = navControllers.navController
+        bottomNavigation()
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.navigation_settings) {
-                binding.appBarMain.appBarLayout.visibility = View.GONE
-                binding.appBarMain.chipCategoryMain.root.visibility = View.GONE
-            } else {
-                binding.appBarMain.appBarLayout.visibility = View.VISIBLE
-                binding.appBarMain.chipCategoryMain.root.visibility = View.VISIBLE
-            }
+    }
+
+    private val launchNewEntryActivity = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            TODO("NOT YET IMPLEMENTED")
         }
+    }
 
-        binding.searchView.setupWithSearchBar(binding.appBarMain.searchBar)
+    private fun appBarMain() {
+        val appBarMain = binding.appBarMain
+        val navigationView = binding.navViewDrawer
+        val searchBar = appBarMain.searchBar
+        val searchView = binding.searchView
+        val drawerLayout = binding.drawerLayout
 
-        val drawerLayout : DrawerLayout = binding.drawerLayout
+        searchView.setupWithSearchBar(searchBar)
 
-        binding.appBarMain.searchBar.setNavigationOnClickListener {
+        searchBar.setNavigationOnClickListener {
             drawerLayout.open()
         }
 
-
-        binding.appBarMain.buttonNew.setOnClickListener {
-            val intent = Intent(this, NewEntryActivity::class.java)
-            launchNewEntryActivity.launch(intent)
-
-        }
-        binding.navViewDrawer.setNavigationItemSelectedListener { view ->
+        navigationView.setNavigationItemSelectedListener { view ->
             when (view.itemId) {
                 R.id.nav_recently -> {
-                    Toast.makeText(this, "Recently", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "History di click", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.nav_favorite -> {
-                    Toast.makeText(this, "Pesan yang ingin ditampilkan", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Favorite di click", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.nav_category -> {
@@ -82,25 +75,38 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-        navView.setupWithNavController(navController)
-
-
+        appBarMain.buttonNew.setOnClickListener {
+            val intent = Intent(this, NewEntryActivity::class.java)
+            launchNewEntryActivity.launch(intent)
+        }
     }
 
+    private fun bottomNavigation() {
+        val bottomNavigationView = binding.navView
 
-    private val launchNewEntryActivity = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
+        val navControllers = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        navController = navControllers.navController
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id) {
+                R.id.navigation_settings -> {
+                    binding.appBarMain.appBarLayout.visibility = View.GONE
+                    binding.appBarMain.chipCategoryMain.root.visibility = View.GONE
+                }
+                R.id.navigation_dashboard -> {
+                    binding.appBarMain.chipCategoryMain.root.visibility = View.GONE
+                }
+                else -> {
+                    binding.appBarMain.appBarLayout.visibility = View.VISIBLE
+                    binding.appBarMain.chipCategoryMain.root.visibility = View.VISIBLE
+                }
+            }
         }
 
+        bottomNavigationView.setupWithNavController(navController)
+
     }
 
-    private fun chipGroup() {
-        
-    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
