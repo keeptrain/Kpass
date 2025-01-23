@@ -28,15 +28,10 @@ android {
     buildFeatures {
         dataBinding = true
         viewBinding = true
-
     }
-
 }
 
-
-
 dependencies {
-
     // Core modules
     implementation(project(":core:data"))
     implementation(project(":core:database"))
