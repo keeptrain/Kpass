@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class CategoryActivityViewModel @Inject constructor(
     private val useCase: GetCategoryUseCase,
@@ -41,6 +42,14 @@ class CategoryActivityViewModel @Inject constructor(
         useCase.updateCategory(category)
     }
 
+    suspend fun getLastPosition(): Int {
+        return useCase.getLastPosition()
+    }
+
+    fun updateCategoryPosition(category: List<Category>) {
+        useCase.updateCategoryPosition(category)
+    }
+
     fun deleteCategory(category: Category) {
         useCase.deleteCategory(category)
     }
@@ -49,13 +58,17 @@ class CategoryActivityViewModel @Inject constructor(
         val result = validationUseCase.validateTitle(category.name)
         if (result.successful) {
             viewModelScope.launch {
-                useCase.insertCategory(category.copy())
+                useCase.insertCategory(category)
                 _insertResult.value = Event(true)
             }
         } else {
             _validationResult.value = Event(result)
         }
     }
+
+//    fun updateCategoryWithFieldsValidation(category: Category) {
+//
+//    }
 
     fun isCategoryNameExists(categoryName : String, callback: (Boolean) -> Unit){
         viewModelScope.launch {

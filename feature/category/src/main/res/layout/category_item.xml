@@ -9,38 +9,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/drag_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_rounded_drag_indicator"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_category"
-            android:contentDescription="@string/edit"
-            style="@style/Widget.Material3.Button.IconButton"/>
-
         <TextView
             android:id="@+id/tv_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="20dp"
             android:text="@string/category_name"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/drag_btn"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/drag_btn"/>
 
-        <!-- Underline View -->
-        <View
-            android:id="@+id/underline"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/teal_200"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tv_category"
-            app:layout_constraintBottom_toBottomOf="parent"/> <!-- Initially hidden -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/drag_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/edit"
+            app:icon="@drawable/ic_rounded_drag_indicator"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Widget.Material3.Button.IconButton"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

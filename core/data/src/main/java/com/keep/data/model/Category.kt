@@ -5,5 +5,6 @@ import com.keep.model.Category
 
 fun Category.toEntity() = CategoryEntity(
     id = id,
-    name = name
+    name = name,
+    position = position
 )
