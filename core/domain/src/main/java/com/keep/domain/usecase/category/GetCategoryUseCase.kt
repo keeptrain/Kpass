@@ -4,8 +4,16 @@ import com.keep.model.Category
 import kotlinx.coroutines.flow.Flow
 
 interface GetCategoryUseCase {
+
     fun getCategory(): Flow<List<Category>>
+
     fun insertCategory(category: Category)
+
     fun updateCategory(category: Category)
+
+    suspend fun getLastPosition() : Int
+
+    fun updateCategoryPosition(category: List<Category>)
+
     fun deleteCategory(category: Category)
 }

@@ -17,14 +17,22 @@ class GetCategoryUseCaseImpl @Inject constructor (
     }
 
     override fun insertCategory(category: Category) {
-        return repository.insertCategory(category)
+        repository.insertCategory(category)
     }
 
     override fun updateCategory(category: Category) {
-        return repository.updateCategory(category)
+         repository.updateCategory(category)
+    }
+
+    override suspend fun getLastPosition(): Int {
+        return repository.getLastPosition()
+    }
+
+    override fun updateCategoryPosition(category: List<Category>) {
+        repository.updateCategoryPosition(category)
     }
 
     override fun deleteCategory(category: Category) {
-        return repository.deleteCategory(category)
+         repository.deleteCategory(category)
     }
 }
