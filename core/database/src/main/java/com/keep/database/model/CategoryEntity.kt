@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.keep.model.Category
-import java.io.Serializable
 
 @Entity(tableName = "category")
 data class CategoryEntity (
@@ -16,19 +15,13 @@ data class CategoryEntity (
     @ColumnInfo("name")
     val name: String,
 
-    ) : Serializable
-//{
-//    companion object {
-//        private var counter = 0
-//
-//        fun create(name: String): CategoryEntity {
-//            counter++
-//            return CategoryEntity(id = "category-$counter", name = name)
-//        }
-//    }
-//}
+    @ColumnInfo("position")
+    val position: Int
+
+)
 
 fun CategoryEntity.toExternalModel() = Category(
     id = id,
-    name = name
+    name = name,
+    position = position
 )
