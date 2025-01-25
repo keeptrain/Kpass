@@ -11,6 +11,11 @@
         android:id="@+id/toolbar_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:title="Manage Category"
+        app:titleTextAppearance="@style/TextAppearance.Material3.ActionBar.Subtitle"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:menu="@menu/menu_category_appbar"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
@@ -26,9 +31,11 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="25dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_category"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_category"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/category_item"/>
 
     <!--include
         android:id="@+id/add_category_layout"

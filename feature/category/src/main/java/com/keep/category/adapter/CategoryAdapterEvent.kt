@@ -6,7 +6,7 @@ interface CategoryAdapterEvent {
 
     fun addCategory()
 
-    fun editCategory(category: Category)
+    fun updateCategory(category: Category)
 
     fun deleteCategory(category: Category)
 
