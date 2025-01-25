@@ -35,7 +35,24 @@ class CategoryRepositoryImpl @Inject constructor (
     }
 
     override fun updateCategory(category: Category) {
-       //categoryDao.insertCategory(category.toEntity())
+        CoroutineScope(ioDispatcher).launch {
+            categoryDao.updateCategory(category.toEntity())
+        }
+    }
+
+    override suspend fun getLastPosition(): Int {
+        val lastPosition = categoryDao.getLastPosition()
+        return if (lastPosition != null) lastPosition + 1 else 0
+    }
+
+    override fun updateCategoryPosition(category: List<Category>) {
+        CoroutineScope(ioDispatcher).launch {
+            category.forEach {
+                it.id?.let { id ->
+                    categoryDao.updatePosition(id,it.position)
+                }
+            }
+        }
     }
 
     override fun deleteCategory(category: Category) {
