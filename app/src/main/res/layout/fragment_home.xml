@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.keep.password.ui.home.HomeFragment">
 
-
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_home"
         android:layout_width="match_parent"
@@ -17,8 +15,7 @@
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
-        android:text="test"
+        android:text="@string/example"
         android:layout_gravity="center"/>
-
 
 </androidx.core.widget.NestedScrollView>

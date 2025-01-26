@@ -1,6 +1,7 @@
 package com.keep.password
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.keep.domain.usecase.category.GetCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -10,5 +11,6 @@ class MainActivityViewModel @Inject constructor(
      useCase: GetCategoryUseCase,
 ) : ViewModel() {
 
+     val category = useCase.getCategory().asLiveData()
 
 }

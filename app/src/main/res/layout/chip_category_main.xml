@@ -12,28 +12,38 @@
         android:id="@+id/chipgroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:verticalScrollbarPosition="right"
         app:singleLine="true">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chipchip"
+            android:id="@+id/chip_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="All"/>
+            android:text="@string/all"/>
 
         <com.google.android.material.chip.Chip
-            android:layout_width ="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gmail"/>
-
-        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_example1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Games"/>
+            android:text="@string/example"/>
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/chip_example2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Others"/>
+            android:text="@string/example"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_example3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/example"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_example4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/example"/>
 
     </com.google.android.material.chip.ChipGroup>
 
