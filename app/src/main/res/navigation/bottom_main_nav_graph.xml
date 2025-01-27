@@ -3,24 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/fragment_home">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/fragment_home"
         android:name="com.keep.password.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home"/>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/fragment_dashboard"
         android:name="com.keep.password.ui.dashboard.DashboardFragment"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard"/>
 
     <fragment
-        android:id="@+id/navigation_settings"
+        android:id="@+id/fragment_settings"
         android:name="com.keep.settings.SettingsFragment"
-        android:label="@string/title_settings">
-    </fragment>
-
+        android:label="@string/title_settings"/>
 
 
 </navigation>

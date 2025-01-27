@@ -22,7 +22,6 @@ import com.keep.password.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        appBarMain()
+        setupAppBar()
         setupChipGroup()
         bottomNavigation()
 
@@ -50,9 +49,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun appBarMain() {
+    private fun setupAppBar() {
         val appBarMain = binding.appBarMain
-        val navigationView = binding.navViewDrawer
         val searchBar = appBarMain.searchBar
         val searchView = binding.searchView
         val drawerLayout = binding.drawerLayout
@@ -63,7 +61,18 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.open()
         }
 
-        navigationView.setNavigationItemSelectedListener { view ->
+        setupDrawerLayout()
+
+        appBarMain.buttonNew.setOnClickListener {
+            val intent = Intent(this, NewEntryActivity::class.java)
+            launchNewEntryActivity.launch(intent)
+        }
+    }
+
+    private fun setupDrawerLayout() {
+        val drawerNavigationView = binding.drawerNavView
+
+        drawerNavigationView.setNavigationItemSelectedListener { view ->
             when (view.itemId) {
                 R.id.nav_recently -> {
                     Toast.makeText(this, "History di click", Toast.LENGTH_SHORT).show()
@@ -80,11 +89,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 else ->false
             }
-        }
-
-        appBarMain.buttonNew.setOnClickListener {
-            val intent = Intent(this, NewEntryActivity::class.java)
-            launchNewEntryActivity.launch(intent)
         }
     }
 
@@ -112,18 +116,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bottomNavigation() {
-        val bottomNavigationView = binding.navView
+        val bottomNavigationView = binding.bottomNavView
 
         val navControllers = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navControllers.navController
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
-                R.id.navigation_settings -> {
-                    binding.appBarMain.appBarLayout.visibility = View.GONE
+                R.id.fragment_dashboard -> {
                     binding.appBarMain.chipCategoryMain.root.visibility = View.GONE
                 }
-                R.id.navigation_dashboard -> {
+                R.id.fragment_settings -> {
+                    binding.appBarMain.appBarLayout.visibility = View.GONE
                     binding.appBarMain.chipCategoryMain.root.visibility = View.GONE
                 }
                 else -> {
@@ -143,6 +147,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val REQUEST_NEW_ENTRY = 100
+        //const val REQUEST_NEW_ENTRY = 100
     }
 }
