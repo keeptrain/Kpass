@@ -2,23 +2,33 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
+    android:id="@+id/bottom_main_nav_graph"
     app:startDestination="@id/fragment_home">
 
     <fragment
         android:id="@+id/fragment_home"
         android:name="com.keep.password.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_home"/>
+        android:label="home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_dashboard"
+            app:destination="@id/fragment_dashboard"/>
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_dashboard"
         android:name="com.keep.password.ui.dashboard.DashboardFragment"
-        tools:layout="@layout/fragment_dashboard"/>
+        android:label="dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboard_to_settings"
+            app:destination="@id/fragment_settings"/>
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_settings"
         android:name="com.keep.settings.SettingsFragment"
-        android:label="@string/title_settings"/>
-
+        android:label="@string/title_settings">
+    </fragment>
 
 </navigation>

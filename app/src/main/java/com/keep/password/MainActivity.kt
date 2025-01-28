@@ -2,6 +2,8 @@ package com.keep.password
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.chip.Chip
@@ -29,7 +29,12 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel : MainActivityViewModel by viewModels()
 
-    private lateinit var navController: NavController
+    private val navController by lazy {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+
+        navHostFragment.navController
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,16 +57,16 @@ class MainActivity : AppCompatActivity() {
     private fun setupAppBar() {
         val appBarMain = binding.appBarMain
         val searchBar = appBarMain.searchBar
-        val searchView = binding.searchView
+        val searchView = binding.searchViewMain
         val drawerLayout = binding.drawerLayout
-
-        searchView.setupWithSearchBar(searchBar)
 
         searchBar.setNavigationOnClickListener {
             drawerLayout.open()
         }
 
         setupDrawerLayout()
+
+        searchView.setupWithSearchBar(searchBar)
 
         appBarMain.buttonNew.setOnClickListener {
             val intent = Intent(this, NewEntryActivity::class.java)
@@ -102,7 +107,6 @@ class MainActivity : AppCompatActivity() {
 
             chipGroup.addView(chip)
         }
-
     }
 
     private fun setupChipGroup() {
@@ -117,32 +121,39 @@ class MainActivity : AppCompatActivity() {
 
     private fun bottomNavigation() {
         val bottomNavigationView = binding.bottomNavView
-
-        val navControllers = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
-        navController = navControllers.navController
+        bottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when(destination.id) {
-                R.id.fragment_dashboard -> {
-                    binding.appBarMain.chipCategoryMain.root.visibility = View.GONE
-                }
-                R.id.fragment_settings -> {
-                    binding.appBarMain.appBarLayout.visibility = View.GONE
-                    binding.appBarMain.chipCategoryMain.root.visibility = View.GONE
+            when (destination.id) {
+                R.id.fragment_home -> {
+                    binding.appBarMain.appBarLayout.visibility = View.VISIBLE
                 }
                 else -> {
-                    binding.appBarMain.appBarLayout.visibility = View.VISIBLE
-                    binding.appBarMain.chipCategoryMain.root.visibility = View.VISIBLE
+                    binding.appBarMain.appBarLayout.visibility = View.GONE
                 }
             }
         }
+    }
 
-        bottomNavigationView.setupWithNavController(navController)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_menu, menu)
+        return super.onCreateOptionsMenu(menu)
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_search -> {
+                val searchView = binding.searchViewMain
+                searchView.setupWithSearchBar(binding.appBarMain.searchBar)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        true
+    }
+
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
