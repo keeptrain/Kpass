@@ -12,17 +12,50 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_home_to_dashboard"
-            app:destination="@id/fragment_dashboard"/>
+            app:destination="@id/fragment_dashboard"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action android:id="@+id/action_home_to_new_entry"
+            app:destination="@id/new_entry_activity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action android:id="@+id/action_home_to_category"
+            app:destination="@id/category_activity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
+
+    <activity
+        android:id="@+id/new_entry_activity"
+        tools:layout="@layout/activity_new_entry"/>
+
+    <activity
+        android:id="@+id/category_activity"
+        tools:layout="@layout/activity_category"/>
 
     <fragment
         android:id="@+id/fragment_dashboard"
         android:name="com.keep.password.ui.dashboard.DashboardFragment"
         android:label="dashboard"
         tools:layout="@layout/fragment_dashboard">
+
         <action
             android:id="@+id/action_dashboard_to_settings"
-            app:destination="@id/fragment_settings"/>
+            app:destination="@id/fragment_settings"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
 
     <fragment

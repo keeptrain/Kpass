@@ -4,23 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.chip.Chip
+import com.google.android.material.search.SearchBar
 import com.keep.category.CategoryActivity
-import com.keep.model.Category
-import com.keep.newentry.NewEntryActivity
 import com.keep.password.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -36,45 +30,35 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.navController
     }
 
+    val launchNewEntryActivity = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            Toast.makeText(this, "Berhasil menambahkan data", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Tidak bisa menambahkan data", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupAppBar()
-        setupChipGroup()
         bottomNavigation()
 
     }
 
-    private val launchNewEntryActivity = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            TODO("NOT YET IMPLEMENTED")
-        }
-    }
-
-    private fun setupAppBar() {
-        val appBarMain = binding.appBarMain
-        val searchBar = appBarMain.searchBar
-        val searchView = binding.searchViewMain
-        val drawerLayout = binding.drawerLayout
-
-        searchBar.setNavigationOnClickListener {
-            drawerLayout.open()
-        }
-
+    fun openDrawer() {
         setupDrawerLayout()
-
-        searchView.setupWithSearchBar(searchBar)
-
-        appBarMain.buttonNew.setOnClickListener {
-            val intent = Intent(this, NewEntryActivity::class.java)
-            launchNewEntryActivity.launch(intent)
-        }
+        binding.drawerLayout.open()
     }
 
-    private fun setupDrawerLayout() {
+    fun setupSearchView(searchBar: SearchBar) {
+        val searchView = binding.searchViewMain
+        searchView.setupWithSearchBar(searchBar)
+    }
+
+    fun setupDrawerLayout() {
         val drawerNavigationView = binding.drawerNavView
 
         drawerNavigationView.setNavigationItemSelectedListener { view ->
@@ -97,39 +81,36 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun chipGroup(categories: List<Category>) {
-        val chipGroup = binding.appBarMain.chipCategoryMain.chipgroup
-        chipGroup.removeAllViews()
+    private fun replaceFragment() {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
 
-        categories.forEach {
-            val chip = Chip(this)
-            chip.text = it.name
+        // Terapkan animasi
+        fragmentTransaction.setCustomAnimations(
+            com.keep.designsystem.R.anim.slide_in_right,  // Masuk
+            com.keep.designsystem.R.anim.slide_out_left,  // Keluar
+            com.keep.designsystem.R.anim.slide_in_left,   // Pop masuk
+            com.keep.designsystem.R.anim.slide_out_right  // Pop keluar
+        )
 
-            chipGroup.addView(chip)
-        }
-    }
-
-    private fun setupChipGroup() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.category.observe(this@MainActivity) {
-                    chipGroup(it)
-                }
-            }
-        }
+        // Ganti fragment
+        fragmentTransaction.commit()
     }
 
     private fun bottomNavigation() {
         val bottomNavigationView = binding.bottomNavView
         bottomNavigationView.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener { a, destination, _ ->
             when (destination.id) {
                 R.id.fragment_home -> {
-                    binding.appBarMain.appBarLayout.visibility = View.VISIBLE
+                    true
                 }
-                else -> {
-                    binding.appBarMain.appBarLayout.visibility = View.GONE
+                R.id.fragment_dashboard -> {
+                    true
+                }
+                R.id.fragment_settings -> {
+                    true
                 }
             }
         }
@@ -138,23 +119,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_menu, menu)
         return super.onCreateOptionsMenu(menu)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_search -> {
                 val searchView = binding.searchViewMain
-                searchView.setupWithSearchBar(binding.appBarMain.searchBar)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
         true
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     companion object {
