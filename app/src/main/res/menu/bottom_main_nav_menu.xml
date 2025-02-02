@@ -10,12 +10,11 @@
     <item
         android:id="@+id/fragment_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_generate"
-        app:showAsAction="always"/>
+        android:title="@string/title_dashboard"/>
 
     <item
         android:id="@+id/fragment_settings"
-        android:icon="@drawable/ic_rounded_settings_24dp"
-        android:title="@string/title_settings"/>
+        android:icon="@drawable/ic_dots_horizontal"
+        android:title="@string/title_more"/>
 
 </menu>
