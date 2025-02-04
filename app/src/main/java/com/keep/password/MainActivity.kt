@@ -1,18 +1,14 @@
 package com.keep.password
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.search.SearchBar
-import com.keep.category.CategoryActivity
 import com.keep.password.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,9 +29,9 @@ class MainActivity : AppCompatActivity() {
     val launchNewEntryActivity = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
-            Toast.makeText(this, "Berhasil menambahkan data", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.all), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Tidak bisa menambahkan data", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(com.keep.category.R.string.close), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -48,35 +44,24 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun openDrawer() {
-        setupDrawerLayout()
-        binding.drawerLayout.open()
-    }
-
-    fun setupSearchView(searchBar: SearchBar) {
+    fun setupSearchView(searchBar: SearchBar? = null) {
         val searchView = binding.searchViewMain
         searchView.setupWithSearchBar(searchBar)
     }
 
-    fun setupDrawerLayout() {
-        val drawerNavigationView = binding.drawerNavView
+    private fun bottomNavigation() {
+        val bottomNavigationView = binding.bottomNavView
+        bottomNavigationView.setupWithNavController(navController)
 
-        drawerNavigationView.setNavigationItemSelectedListener { view ->
-            when (view.itemId) {
-                R.id.nav_recently -> {
-                    Toast.makeText(this, "History di click", Toast.LENGTH_SHORT).show()
+        navController.addOnDestinationChangedListener { a, destination, _ ->
+            when (destination.id) {
+                R.id.fragment_home , R.id.fragment_dashboard, R.id.fragment_settings -> {
+                    bottomNavigationView.visibility = View.VISIBLE
                     true
                 }
-                R.id.nav_favorite -> {
-                    Toast.makeText(this, "Favorite di click", Toast.LENGTH_SHORT).show()
-                    true
+                else -> {
+                    bottomNavigationView.visibility = View.GONE
                 }
-                R.id.nav_category -> {
-                    val intent = Intent(this, CategoryActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                else ->false
             }
         }
     }
@@ -95,41 +80,6 @@ class MainActivity : AppCompatActivity() {
 
         // Ganti fragment
         fragmentTransaction.commit()
-    }
-
-    private fun bottomNavigation() {
-        val bottomNavigationView = binding.bottomNavView
-        bottomNavigationView.setupWithNavController(navController)
-
-        navController.addOnDestinationChangedListener { a, destination, _ ->
-            when (destination.id) {
-                R.id.fragment_home -> {
-                    true
-                }
-                R.id.fragment_dashboard -> {
-                    true
-                }
-                R.id.fragment_settings -> {
-                    true
-                }
-            }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.search_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_search -> {
-                val searchView = binding.searchViewMain
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-        true
     }
 
     companion object {
