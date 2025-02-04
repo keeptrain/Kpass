@@ -48,15 +48,14 @@ class HomeFragment : Fragment() {
 
         setupAppBar()
         setupChipGroup()
+//        setupRecyclerView()
+//        initialAdapter()
 
-//        val rv = binding.recyclerCategory
-//        rv.layoutManager = LinearLayoutManager(context)
-//        rv.adapter = categoryAdapter
-//
-//        homeViewModel.categories.observe(viewLifecycleOwner) {
-//            categoryAdapter.submitList(homeViewModel.generateCategoryAdapterList(it))
-//        }
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setupAppBar() {
@@ -64,13 +63,7 @@ class HomeFragment : Fragment() {
         val searchBar = appBar.searchBar
         val buttonNew = appBar.buttonNew
 
-        searchBar.setNavigationOnClickListener {
-            mainActivity.openDrawer()
-        }
-
-        searchBar.setOnClickListener {
-            mainActivity.setupSearchView(searchBar)
-        }
+        mainActivity.setupSearchView(searchBar)
 
         buttonNew.setOnClickListener { view ->
             val intent = Intent(requireContext(), NewEntryActivity::class.java)
@@ -100,8 +93,17 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+//    private fun setupRecyclerView() {
+//        val rv = binding.recyclerViewEntry
+//        rv.layoutManager = LinearLayoutManager(context)
+//        rv.adapter = categoryAdapter
+//    }
+//
+//    fun initialAdapter() {
+//        homeViewModel.categories.observe(viewLifecycleOwner) {
+//            categoryAdapter.submitList(homeViewModel.generateCategoryAdapterList(it))
+//        }
+//    }
+//
+
 }
