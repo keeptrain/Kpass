@@ -36,10 +36,12 @@
 
     <activity
         android:id="@+id/new_entry_activity"
+        android:name="com.keep.newentry.NewEntryActivity"
         tools:layout="@layout/activity_new_entry"/>
 
-    <activity
+    <fragment
         android:id="@+id/category_activity"
+        android:name="com.keep.category.CategoryActivity"
         tools:layout="@layout/activity_category"/>
 
     <fragment
@@ -56,12 +58,34 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
 
+        <action
+            android:id="@+id/action_settings_to_manage_category"
+            app:destination="@id/category_activity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/fragment_settings"
-        android:name="com.keep.settings.SettingsFragment"
+        android:name="com.keep.password.ui.settings.SettingsFragment"
+        tools:layout="@layout/fragment_settings"
         android:label="@string/title_more">
+
+        <action
+            android:id="@+id/action_settings_to_manage_category"
+            app:destination="@id/category_activity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/fragment_category"
+        android:name="com.keep.settings.SettingsFragment"
+        />
 
 </navigation>

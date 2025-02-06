@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.keep.newentry.databinding.ActivityNewEntryBinding
+import com.keep.password.feature.newentry.databinding.ActivityNewEntryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

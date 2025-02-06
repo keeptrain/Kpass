@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.keep.category.CategoryActivity
-import com.keep.category.databinding.CategoryItemBinding
-import com.keep.category.databinding.EmptyItemBinding
+import com.keep.password.feature.category.databinding.CategoryItemBinding
+import com.keep.password.feature.category.databinding.EmptyItemBinding
 
 
 class CategoryAdapter (
@@ -77,7 +77,7 @@ class CategoryAdapter (
             private val binding: EmptyItemBinding,
         ) : CategoryViewHolder(binding) {
             fun bind(categoryItem: CategoryListAdapterItem.EmptyItem) {
-                binding.tvCategory.text = ""
+//                binding.tvCategory.text = ""
             }
         }
     }

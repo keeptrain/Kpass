@@ -23,9 +23,9 @@ import com.keep.category.CategoryActivityViewModel
 import com.keep.category.adapter.CategoryAdapter
 import com.keep.category.adapter.CategoryAdapterEvent
 import com.keep.category.adapter.CustomItemTouchHelperCallback
-import com.keep.category.databinding.FragmentReoderBottomSheetDialogBinding
+import com.keep.password.feature.category.R
+import com.keep.password.feature.category.databinding.FragmentReoderBottomSheetDialogBinding
 import kotlinx.coroutines.launch
-import com.keep.category.R
 
 
 class ReorderCategoryBottomDialog(
@@ -149,5 +149,4 @@ class ReorderCategoryBottomDialog(
             }
         }
     }
-    
 }

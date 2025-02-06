@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.search.SearchBar
+import com.keep.password.core.designsystem.R
 import com.keep.password.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private val navController by lazy {
         val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+            .findFragmentById(com.keep.password.R.id.nav_host_fragment_activity_main) as NavHostFragment
 
         navHostFragment.navController
     }
@@ -29,9 +30,9 @@ class MainActivity : AppCompatActivity() {
     val launchNewEntryActivity = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
-            Toast.makeText(this, getString(R.string.all), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(com.keep.password.R.string.all), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, getString(com.keep.category.R.string.close), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(com.keep.password.R.string.all), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { a, destination, _ ->
             when (destination.id) {
-                R.id.fragment_home , R.id.fragment_dashboard, R.id.fragment_settings -> {
+                com.keep.password.R.id.fragment_home , com.keep.password.R.id.fragment_dashboard, com.keep.password.R.id.fragment_settings -> {
                     bottomNavigationView.visibility = View.VISIBLE
                     true
                 }
@@ -72,10 +73,10 @@ class MainActivity : AppCompatActivity() {
 
         // Terapkan animasi
         fragmentTransaction.setCustomAnimations(
-            com.keep.designsystem.R.anim.slide_in_right,  // Masuk
-            com.keep.designsystem.R.anim.slide_out_left,  // Keluar
-            com.keep.designsystem.R.anim.slide_in_left,   // Pop masuk
-            com.keep.designsystem.R.anim.slide_out_right  // Pop keluar
+            R.anim.slide_in_right,  // Masuk
+            R.anim.slide_out_left,  // Keluar
+            R.anim.slide_in_left,   // Pop masuk
+            R.anim.slide_out_right  // Pop keluar
         )
 
         // Ganti fragment

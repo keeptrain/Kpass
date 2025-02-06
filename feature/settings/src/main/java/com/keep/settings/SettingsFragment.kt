@@ -3,6 +3,7 @@ package com.keep.settings
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
+import com.keep.password.feature.settings.R
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {

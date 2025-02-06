@@ -10,10 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.keep.category.CategoryActivityViewModel
-import com.keep.category.R
-import com.keep.category.databinding.FragmentInsertBottomSheetDialogBinding
-import com.keep.category.databinding.FragmentMoreBottomSheetDialogBinding
 import com.keep.model.Category
+import com.keep.password.feature.category.R
+import com.keep.password.feature.category.databinding.FragmentInsertBottomSheetDialogBinding
+import com.keep.password.feature.category.databinding.FragmentMoreBottomSheetDialogBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
