@@ -2,13 +2,13 @@ package com.keep.category.adapter
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.keep.category.CategoryActivityViewModel
+import com.keep.category.CategoryViewModel
 import com.keep.category.adapter.CategoryAdapter.CategoryViewHolder
 import com.keep.model.Category
 import java.util.Collections
 
 open class CustomItemTouchHelperCallback (
-    private val viewModel: CategoryActivityViewModel
+    private val viewModel: CategoryViewModel
 ) : ItemTouchHelper.Callback() {
 
     private var tempCategoryList: List<Category> = emptyList()

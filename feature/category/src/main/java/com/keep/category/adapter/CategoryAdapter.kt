@@ -1,6 +1,5 @@
 package com.keep.category.adapter
 
-
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,10 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.keep.category.CategoryActivity
+import com.keep.category.CategoryFragment
 import com.keep.password.feature.category.databinding.CategoryItemBinding
 import com.keep.password.feature.category.databinding.EmptyItemBinding
-
 
 class CategoryAdapter (
     private val eventListener : CategoryAdapterEvent
@@ -62,7 +60,7 @@ class CategoryAdapter (
                         text = categoryItem.category.name
                     }
                     root.setOnClickListener {
-                        val intent = Intent(root.context, CategoryActivity::class.java)
+                        val intent = Intent(root.context, CategoryFragment::class.java)
                         true
                     }
                     root.setOnLongClickListener {

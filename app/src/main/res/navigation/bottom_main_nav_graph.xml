@@ -41,8 +41,8 @@
 
     <fragment
         android:id="@+id/category_activity"
-        android:name="com.keep.category.CategoryActivity"
-        tools:layout="@layout/activity_category"/>
+        android:name="com.keep.category.CategoryFragment"
+        tools:layout="@layout/fragment_category"/>
 
     <fragment
         android:id="@+id/fragment_dashboard"

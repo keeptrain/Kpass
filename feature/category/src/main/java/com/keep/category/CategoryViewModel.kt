@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class CategoryActivityViewModel @Inject constructor(
+class CategoryViewModel @Inject constructor(
     private val useCase: GetCategoryUseCase,
     private val validationUseCase: CategoryValidationUseCase,
 ): ViewModel() {

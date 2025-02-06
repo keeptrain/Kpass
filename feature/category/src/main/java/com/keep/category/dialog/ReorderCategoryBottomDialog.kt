@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.keep.category.CategoryActivityViewModel
+import com.keep.category.CategoryViewModel
 import com.keep.category.adapter.CategoryAdapter
 import com.keep.category.adapter.CategoryAdapterEvent
 import com.keep.category.adapter.CustomItemTouchHelperCallback
@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 
 
 class ReorderCategoryBottomDialog(
-    val viewModel: CategoryActivityViewModel,
+    val viewModel: CategoryViewModel,
     val categoryAdapter: CategoryAdapter,
     val listener: CategoryAdapterEvent
 ) : BottomSheetDialogFragment() {

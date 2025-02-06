@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.keep.category.CategoryActivityViewModel
+import com.keep.category.CategoryViewModel
 import com.keep.model.Category
 import com.keep.password.feature.category.R
 import com.keep.password.feature.category.databinding.FragmentInsertBottomSheetDialogBinding
@@ -31,7 +31,7 @@ class BottomCategoryDialogFragment : BottomSheetDialogFragment() {
 //    private val reorderBinding get() = _reorderBinding
 
     private val viewModel by lazy {
-        ViewModelProvider(requireActivity())[CategoryActivityViewModel::class.java]
+        ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
     }
 
     private var currentState: BottomSheetState = BottomSheetState.INSERT

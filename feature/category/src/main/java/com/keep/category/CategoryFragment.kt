@@ -1,38 +1,57 @@
 package com.keep.category
 
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keep.category.dialog.BottomCategoryDialogFragment.BottomSheetState
 import com.keep.category.adapter.CategoryAdapter
 import com.keep.category.adapter.CategoryAdapterEvent
 import com.keep.category.adapter.CustomItemTouchHelperCallback
-import com.keep.category.databinding.ActivityCategoryBinding
 import com.keep.category.dialog.BottomCategoryDialogFragment
 import com.keep.category.dialog.ReorderCategoryBottomDialog
 import com.keep.model.Category
+import com.keep.password.feature.category.R
+import com.keep.password.feature.category.databinding.FragmentCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
-class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
+class CategoryFragment : Fragment(),CategoryAdapterEvent {
 
-    private lateinit var binding : ActivityCategoryBinding
+    private lateinit var binding : FragmentCategoryBinding
 
-    private val viewModel : CategoryActivityViewModel by viewModels()
+    private val viewModel : CategoryViewModel by viewModels()
 
-    private var categoryAdapter = CategoryAdapter(this@CategoryActivity)
+    private var categoryAdapter = CategoryAdapter(this@CategoryFragment)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCategoryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        binding = ActivityCategoryBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//
+//        setupToolbar()
+//        setupRecyclerView()
+//        initialAdapter()
+//    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentCategoryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setupToolbar()
         setupRecyclerView()
@@ -46,7 +65,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
             }
 
             toolbarCategory.setNavigationOnClickListener {
-                onBackPressedDispatcher.onBackPressed()
+                findNavController().popBackStack()
             }
 
             toolbarCategory.setOnMenuItemClickListener {
@@ -73,13 +92,11 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
 
     private fun initialAdapter() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.categories.observe(this@CategoryActivity) { listCategory ->
+                viewModel.categories.observe(viewLifecycleOwner) { listCategory ->
                     categoryAdapter.submitList(
                         viewModel.generateCategoryAdapterList(listCategory)
                     )
                 }
-            }
         }
     }
 
@@ -93,7 +110,7 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
             }
         }
         addCategoryDialogFragment.switchState(BottomSheetState.INSERT)
-        addCategoryDialogFragment.show(supportFragmentManager, "AddCategoryDialogFragment")
+        addCategoryDialogFragment.show(parentFragmentManager, "AddCategoryDialogFragment")
     }
 
     private fun showMoreCategoryBottomSheet(category: Category) {
@@ -103,13 +120,13 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
             }
         }
         moreCategoryDialogFragment.switchState(BottomSheetState.MORE)
-        moreCategoryDialogFragment.show(supportFragmentManager, "MoreCategoryDialogFragment")
+        moreCategoryDialogFragment.show(parentFragmentManager, "MoreCategoryDialogFragment")
 
     }
 
     private fun showReorderCategoryBottomSheet() {
         val bottomSheet = ReorderCategoryBottomDialog(viewModel,categoryAdapter,this)
-        bottomSheet.show(supportFragmentManager, "ReorderCategoryBottomDialog")
+        bottomSheet.show(parentFragmentManager, "ReorderCategoryBottomDialog")
     }
 
     override fun addCategory() {
@@ -128,9 +145,9 @@ class CategoryActivity : AppCompatActivity(),CategoryAdapterEvent {
         showMoreCategoryBottomSheet(category)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressedDispatcher.onBackPressed()
-        return true
-    }
+//    override fun onSupportNavigateUp(): Boolean {
+//        onBackPressedDispatcher.onBackPressed()
+//        return true
+//    }
 
 }
