@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `kotlin-dsl`
@@ -13,46 +12,42 @@ java {
 }
 
 kotlin {
-    jvmToolchain(17)
-}
-
-tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
 dependencies {
-    implementation(libs.room.gradlePlugin)
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
+    compileOnly(libs.room.gradlePlugin)
 }
 
 gradlePlugin {
     plugins {
         register("androidApplication") {
-            id = "kpass.android.application"
+            id = libs.plugins.kpass.android.application.get().pluginId
             implementationClass = "AndroidApplicationConventionPlugin"
         }
         register("androidLibrary") {
-            id = "kpass.android.library"
+            id = libs.plugins.kpass.android.library.get().pluginId
             implementationClass = "AndroidLibraryConventionPlugin"
         }
         register("androidFeature") {
-            id = "kpass.android.feature"
+            id = libs.plugins.kpass.android.feature.get().pluginId
             implementationClass = "AndroidFeatureConventionPlugin"
         }
-        register("androidHilt") {
-            id = "kpass.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
+        register("hilt") {
+            id = libs.plugins.kpass.hilt.get().pluginId
+            implementationClass = "HiltConventionPlugin"
         }
         register("androidNavigation") {
-            id = "kpass.android.navigation"
+            id = libs.plugins.kpass.android.navigation.get().pluginId
             implementationClass = "AndroidNavigationConventionPlugin"
         }
         register("androidRoom") {
-            id = "kpass.android.room"
+            id = libs.plugins.kpass.android.room.get().pluginId
             implementationClass = "AndroidRoomConventionPlugin"
         }
     }

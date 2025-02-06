@@ -1,9 +1,9 @@
 plugins {
-    id("kpass.android.library")
+    alias(libs.plugins.kpass.android.library)
 }
 
 android {
-    namespace = "com.keep.designsystem"
+    namespace = "com.keep.password.core.designsystem"
 }
 
 dependencies {

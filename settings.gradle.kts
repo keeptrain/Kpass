@@ -1,26 +1,29 @@
-@file:Suppress("UnstableApiUsage")
-
 pluginManagement {
     includeBuild("build-logic")
     repositories {
-        google()
-        /*google {
+        google {
             content {
                 includeGroupByRegex("com\\.android.*")
                 includeGroupByRegex("com\\.google.*")
                 includeGroupByRegex("androidx.*")
             }
-        }*/
+        }
         mavenCentral()
         gradlePluginPortal()
     }
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
     repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
-        google()
     }
 }
 
@@ -33,6 +36,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 // Subprojects
 include(":app")
 
+// Core Module
 include(":core:common")
 include(":core:data")
 include(":core:database")
@@ -40,6 +44,7 @@ include(":core:designsystem")
 include(":core:domain")
 include(":core:model")
 
+// Feature module
 include(":feature:category")
 include(":feature:newentry")
 include(":feature:settings")

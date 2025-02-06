@@ -1,14 +1,11 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id("kpass.android.library")
-    id("kpass.android.hilt")
-    id("kpass.android.room")
+    alias(libs.plugins.kpass.android.library)
+    alias(libs.plugins.kpass.android.room)
+    alias(libs.plugins.kpass.hilt)
 }
 
 android {
-    namespace = "com.keep.database"
+    namespace = "com.keep.password.core.database"
 }
 
 dependencies {

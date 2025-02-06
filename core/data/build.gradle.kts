@@ -1,10 +1,10 @@
 plugins {
-    id("kpass.android.library")
-    id("kpass.android.hilt")
+    alias(libs.plugins.kpass.android.library)
+    alias(libs.plugins.kpass.hilt)
 }
 
 android {
-    namespace = "com.keep.data"
+    namespace = "com.keep.password.core.data"
 }
 
 dependencies {

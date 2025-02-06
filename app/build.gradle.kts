@@ -1,7 +1,6 @@
 plugins {
-    // alias(libs.plugins.kpass.android.application)
-    id("kpass.android.application")
-    id("kpass.android.hilt")
+    alias(libs.plugins.kpass.android.application)
+    alias(libs.plugins.kpass.hilt)
 }
 
 android {
@@ -40,7 +39,7 @@ dependencies {
     implementation(project(":core:model"))
 
     // Feature modules
-    implementation(project(":feature:category"))
+    implementation(projects.feature.category)
     implementation(project(":feature:newentry"))
     implementation(project(":feature:settings"))
 
@@ -55,6 +54,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    ksp(libs.hilt.compiler)
 
     //Preferences
     implementation(libs.androidx.preference)

@@ -1,16 +1,11 @@
 plugins {
-    id("kpass.android.feature")
+    alias(libs.plugins.kpass.android.feature)
 }
-
 
 android {
-    namespace = "com.keep.newentry"
+    namespace = "com.keep.password.feature.newentry"
 
     buildFeatures {
-        dataBinding = true
         viewBinding = true
     }
-}
-
-dependencies {
 }

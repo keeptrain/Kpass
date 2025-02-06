@@ -1,15 +1,13 @@
 plugins {
-    id("kpass.android.feature")
+    alias(libs.plugins.kpass.android.feature)
 }
 
 android {
-    namespace = "com.keep.settings"
+    namespace = "com.keep.password.feature.settings"
 
     buildFeatures {
-        dataBinding = true
         viewBinding = true
     }
-
 }
 
 dependencies {

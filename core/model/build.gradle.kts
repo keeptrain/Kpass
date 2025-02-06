@@ -1,7 +1,7 @@
 plugins {
-    id("kpass.android.library")
+    alias(libs.plugins.kpass.android.library)
 }
 
 android {
-    namespace = "com.keep.model"
+    namespace = "com.keep.password.core.model"
 }
