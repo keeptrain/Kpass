@@ -7,16 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.chip.Chip
 import com.keep.model.Category
 import com.keep.newentry.NewEntryActivity
 import com.keep.password.MainActivity
 import com.keep.password.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -71,9 +67,20 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun chipDefault() : Chip {
+        val chip = Chip(requireContext())
+        return chip.apply {
+            text = getString(com.keep.password.R.string.all)
+            isCheckable = true
+            isChecked = true
+        }
+    }
+
     private fun chipGroup(categories: List<Category>) {
         val chipGroup = binding.appBarMain.chipCategoryMain.chipgroup
         chipGroup.removeAllViews()
+
+        chipGroup.addView(chipDefault())
 
         categories.forEach {
             val chip = Chip(requireContext())
@@ -84,12 +91,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupChipGroup() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                homeViewModel.categories.observe(viewLifecycleOwner) {
-                    chipGroup(it)
-                }
-            }
+        homeViewModel.categories.observe(viewLifecycleOwner) {
+            chipGroup(it)
         }
     }
 
