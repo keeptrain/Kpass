@@ -24,7 +24,7 @@ import com.keep.category.adapter.CategoryAdapter
 import com.keep.category.adapter.CategoryAdapterEvent
 import com.keep.category.adapter.CustomItemTouchHelperCallback
 import com.keep.password.feature.category.R
-import com.keep.password.feature.category.databinding.FragmentReoderBottomSheetDialogBinding
+import com.keep.password.feature.category.databinding.FragmentReorderBottomSheetDialogBinding
 import kotlinx.coroutines.launch
 
 
@@ -34,7 +34,7 @@ class ReorderCategoryBottomDialog(
     val listener: CategoryAdapterEvent
 ) : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentReoderBottomSheetDialogBinding? = null
+    private var _binding: FragmentReorderBottomSheetDialogBinding? = null
     private val binding get() = _binding!!
 
     private val customItemTouchHelperCallback by lazy {
@@ -51,7 +51,7 @@ class ReorderCategoryBottomDialog(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentReoderBottomSheetDialogBinding.inflate(inflater, container, false)
+        _binding = FragmentReorderBottomSheetDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 
