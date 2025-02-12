@@ -1,17 +1,8 @@
 <resources>
     <string name="app_name">Kpass</string>
+
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_more">More</string>
 
-    <string name="search_hint">Search…</string>
-
-    <string name="menu_recently">Recently</string>
-    <string name="menu_favorite">Favorite</string>
-
-    <string name="title_manage">Manage</string>
-    <string name="menu_category">Category</string>
-    <string name="menu_filter">Filter</string>
-    <string name="all">All</string>
-    <string name="example">Example</string>
 </resources>

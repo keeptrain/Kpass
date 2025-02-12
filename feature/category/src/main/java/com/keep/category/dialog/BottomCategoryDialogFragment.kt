@@ -106,8 +106,8 @@ class BottomCategoryDialogFragment : BottomSheetDialogFragment() {
         }
 
         val addButtonText = category?.let {
-            R.string.save
-        } ?: R.string.add
+            com.keep.password.core.common.R.string.save
+        } ?: com.keep.password.core.common.R.string.add
         insertBinding.btnAdd.text = requireContext().getString(addButtonText)
 
     }

@@ -1,4 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="add">Add</string>
+    <string name="all">All</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="example">Example</string>
+    <string name="ok">OK</string>
+    <string name="save">Save</string>
+    <string name="search">Search</string>
+
     <string name="cannot_empty">Cannot Empty</string>
 </resources>
