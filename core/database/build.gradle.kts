@@ -10,7 +10,7 @@ android {
 
 dependencies {
 
-    implementation(project(":core:model"))
+    implementation(projects.core.model)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

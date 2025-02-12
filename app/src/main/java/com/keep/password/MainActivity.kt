@@ -2,16 +2,16 @@ package com.keep.password
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.search.SearchBar
-import com.keep.password.core.designsystem.R
+import com.keep.common.navigation.NavigationNode
 import com.keep.password.databinding.ActivityMainBinding
+import com.keep.password.feature.home.navigation.HomeNavigationNode
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -20,20 +20,13 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel : MainActivityViewModel by viewModels()
 
+    @Inject
+    lateinit var navigationNodes: @JvmSuppressWildcards Set<NavigationNode>
+
     private val navController by lazy {
         val navHostFragment = supportFragmentManager
-            .findFragmentById(com.keep.password.R.id.nav_host_fragment_activity_main) as NavHostFragment
-
+            .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navHostFragment.navController
-    }
-
-    val launchNewEntryActivity = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            Toast.makeText(this, getString(com.keep.password.R.string.all), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, getString(com.keep.password.R.string.all), Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,46 +34,62 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        bottomNavigation()
+        setupNavGraph()
+        setupBottomNavigation()
 
     }
 
-    fun setupSearchView(searchBar: SearchBar? = null) {
-        val searchView = binding.searchViewMain
-        searchView.setupWithSearchBar(searchBar)
-    }
+//    fun setupSearchView(searchBar: SearchBar? = null) {
+//        val searchView = binding.searchViewMain
+//        val test = HomeFragment().view?.findViewById<SearchView>(R.id.search_view_main)
+//        searchView.setupWithSearchBar(searchBar)
+//    }
 
-    private fun bottomNavigation() {
-        val bottomNavigationView = binding.bottomNavView
-        bottomNavigationView.setupWithNavController(navController)
-
-        navController.addOnDestinationChangedListener { a, destination, _ ->
-            when (destination.id) {
-                com.keep.password.R.id.fragment_home , com.keep.password.R.id.fragment_dashboard, com.keep.password.R.id.fragment_settings -> {
-                    bottomNavigationView.visibility = View.VISIBLE
-                    true
-                }
-                else -> {
-                    bottomNavigationView.visibility = View.GONE
-                }
+    private fun setupNavGraph() {
+        navController.graph = navController.createGraph(
+            startDestination = HomeNavigationNode.ROUTE,
+        ) {
+            navigationNodes.forEach { navNode ->
+                navNode.addNode(this)
             }
         }
     }
 
-    private fun replaceFragment() {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
+    private fun setupBottomNavigation() {
+        val bottomNavigationView = binding.bottomNavView
+        bottomNavigationView.setupWithNavController(navController)
 
-        // Terapkan animasi
-        fragmentTransaction.setCustomAnimations(
-            R.anim.slide_in_right,  // Masuk
-            R.anim.slide_out_left,  // Keluar
-            R.anim.slide_in_left,   // Pop masuk
-            R.anim.slide_out_right  // Pop keluar
-        )
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.fragment_home -> {
+                    navController.navigate(HomeNavigationNode.START_DESTINATION)
+                    true
+                }
+                R.id.fragment_dashboard -> {
+                    navController.navigate(HomeNavigationNode.DASHBOARD_DESTINATION)
+                    true
+                }
+                R.id.fragment_settings -> {
+                    navController.navigate(HomeNavigationNode.MORE_DESTINATION)
+                    true
+                }
+                else -> true
+            }
+        }
 
-        // Ganti fragment
-        fragmentTransaction.commit()
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.route) {
+                HomeNavigationNode.START_DESTINATION,
+                HomeNavigationNode.DASHBOARD_DESTINATION,
+                HomeNavigationNode.MORE_DESTINATION -> {
+                    bottomNavigationView.visibility = View.VISIBLE
+                    true
+                } else -> {
+                    bottomNavigationView.visibility = View.GONE
+                }
+            }
+        }
+
     }
 
     companion object {

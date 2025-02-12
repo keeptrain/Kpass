@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kpass.android.application)
     alias(libs.plugins.kpass.hilt)
+    alias(libs.plugins.kpass.android.navigation)
 }
 
 android {
@@ -32,31 +33,26 @@ android {
 
 dependencies {
     // Core modules
-    implementation(project(":core:data"))
-    implementation(project(":core:database"))
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:model"))
+    implementation(projects.core.common)
+    implementation(projects.core.data)
+    implementation(projects.core.database)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.domain)
+    implementation(projects.core.model)
 
     // Feature modules
     implementation(projects.feature.category)
-    implementation(project(":feature:newentry"))
-    implementation(project(":feature:settings"))
+    implementation(projects.feature.home)
+    implementation(projects.feature.newentry)
+    implementation(projects.feature.settings)
 
+    // Core Androidx
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
+
+    // JUnit
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    ksp(libs.hilt.compiler)
-
-    //Preferences
-    implementation(libs.androidx.preference)
 }

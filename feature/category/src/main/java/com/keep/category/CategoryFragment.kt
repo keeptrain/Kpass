@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,7 @@ import com.keep.password.feature.category.R
 import com.keep.password.feature.category.databinding.FragmentCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CategoryFragment : Fragment(),CategoryAdapterEvent {
@@ -29,17 +31,10 @@ class CategoryFragment : Fragment(),CategoryAdapterEvent {
 
     private val viewModel : CategoryViewModel by viewModels()
 
-    private var categoryAdapter = CategoryAdapter(this@CategoryFragment)
+    @Inject
+    lateinit var navController: NavController
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        binding = ActivityCategoryBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//
-//        setupToolbar()
-//        setupRecyclerView()
-//        initialAdapter()
-//    }
+    private var categoryAdapter = CategoryAdapter(this@CategoryFragment)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,11 +87,11 @@ class CategoryFragment : Fragment(),CategoryAdapterEvent {
 
     private fun initialAdapter() {
         lifecycleScope.launch {
-                viewModel.categories.observe(viewLifecycleOwner) { listCategory ->
-                    categoryAdapter.submitList(
-                        viewModel.generateCategoryAdapterList(listCategory)
-                    )
-                }
+            viewModel.categories.observe(viewLifecycleOwner) { listCategory ->
+                categoryAdapter.submitList(
+                    viewModel.generateCategoryAdapterList(listCategory)
+                )
+            }
         }
     }
 
@@ -121,7 +116,6 @@ class CategoryFragment : Fragment(),CategoryAdapterEvent {
         }
         moreCategoryDialogFragment.switchState(BottomSheetState.MORE)
         moreCategoryDialogFragment.show(parentFragmentManager, "MoreCategoryDialogFragment")
-
     }
 
     private fun showReorderCategoryBottomSheet() {

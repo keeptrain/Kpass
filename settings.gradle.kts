@@ -46,5 +46,6 @@ include(":core:model")
 
 // Feature module
 include(":feature:category")
+include(":feature:home")
 include(":feature:newentry")
 include(":feature:settings")

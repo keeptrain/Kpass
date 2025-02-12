@@ -8,9 +8,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:database"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:model"))
+
+    implementation(projects.core.database)
+    implementation(projects.core.domain)
+    implementation(projects.core.model)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
