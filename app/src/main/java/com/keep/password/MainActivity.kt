@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.createGraph
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.keep.common.navigation.NavigationNode
 import com.keep.password.databinding.ActivityMainBinding
 import com.keep.password.feature.home.navigation.HomeNavigationNode
+import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,11 +24,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var navigationNodes: @JvmSuppressWildcards Set<NavigationNode>
 
-    private val navController by lazy {
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
-        navHostFragment.navController
-    }
+    @Inject
+    lateinit var lazyNavController: Lazy<NavController>
+    private val navController by lazy { lazyNavController.get() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +37,6 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavigation()
 
     }
-
-//    fun setupSearchView(searchBar: SearchBar? = null) {
-//        val searchView = binding.searchViewMain
-//        val test = HomeFragment().view?.findViewById<SearchView>(R.id.search_view_main)
-//        searchView.setupWithSearchBar(searchBar)
-//    }
 
     private fun setupNavGraph() {
         navController.graph = navController.createGraph(
@@ -90,9 +83,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    }
-
-    companion object {
-        //const val REQUEST_NEW_ENTRY = 100
     }
 }
