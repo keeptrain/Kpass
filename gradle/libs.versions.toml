@@ -79,3 +79,4 @@ kpass-android-library = { id = "kpass.android.library", version = "kpass.android
 kpass-android-navigation = { id = "kpass.android.navigation", version = "kpass.android.navigation"}
 kpass-android-room = { id = "kpass.android.room", version = "kpass.android.room"}
 kpass-hilt = { id = "kpass.hilt", version = "kpass.hilt" }
+kpass-jvm-library = { id= "kpass.jvm.library", version = "kpass.jvm.library"}

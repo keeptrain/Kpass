@@ -9,3 +9,7 @@ android {
         viewBinding = true
     }
 }
+
+dependencies {
+    implementation(projects.feature.category.shared)
+}

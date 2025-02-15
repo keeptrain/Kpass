@@ -50,6 +50,10 @@ gradlePlugin {
             id = libs.plugins.kpass.android.room.get().pluginId
             implementationClass = "AndroidRoomConventionPlugin"
         }
+        register("jvmLibrary") {
+            id = libs.plugins.kpass.jvm.library.get().pluginId
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
     }
 }
 
