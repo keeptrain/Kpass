@@ -5,14 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.keep.password.feature.home.databinding.FragmentMoreBinding
+import com.keep.password.feature.home.navigation.HomeNavigationNode
+import com.kpass.category.shared.CategoryFeatureCommunicator
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MoreFragment : Fragment() {
 
     private var _binding : FragmentMoreBinding? = null
 
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var categoryFeatureCommunicator: CategoryFeatureCommunicator
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +41,9 @@ class MoreFragment : Fragment() {
 
     private fun setupNavigation() {
         binding.listManage1.setOnClickListener {
-            findNavController().navigate("category_screen")
+            categoryFeatureCommunicator.getFeature(CategoryFeatureCommunicator.CategoryFeatureArgs(
+                HomeNavigationNode.ROUTE
+            ))
         }
     }
 

@@ -1,55 +1,47 @@
 package com.keep.category.adapter
 
-import android.os.Build
-import android.os.Parcel
-import android.os.Parcelable
-import androidx.appcompat.widget.AlertDialogLayout
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DiffUtil
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.keep.category.CategoryActivityViewModel
-import com.keep.model.Category
+import android.R.layout
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.AttributeSet
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.view.LayoutInflaterCompat
+import com.keep.password.feature.category.R
 
-class Test :BottomSheetDialogFragment() {
+class CustomCardView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null
+) : LinearLayout(context,attrs) {
 
-    private val viewModel by lazy {
-        ViewModelProvider(requireActivity())[CategoryActivityViewModel::class.java]
+    private val startIcon: ImageView = ImageView(context)
+//    private val textContent: TextView
+    private val endIcon: ImageView = ImageView(context)
+
+
+    init {
+        orientation = HORIZONTAL
+        gravity = Gravity.CENTER_VERTICAL
+
+
+
+        LayoutInflater.from(context).inflate(R.layout.empty_item,this, true)
+    }
+
+    override fun addView(child: View?) {
+        super.addView(child)
     }
 
 
-
-    private fun test() {
-        viewModel.apply {
-            insertResult.observe(viewLifecycleOwner) {result ->
-            }
-        }
+    override fun getBackground(): Drawable? {
+        return super.background
     }
 
-    fun tests() = object : aaii(test = "") {
-        override fun tests(): Any {
-            TODO("Not yet implemented")
-        }
-
+    override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
+        super.setPadding(left, top, right, bottom)
     }
 
-
 }
-
-abstract class aaii (test: String) {
-    abstract fun tests(): Any
-}
-
-class aib (test:String): aaii(test = test) {
-    override fun tests(): Any {
-        TODO("Not yet implemented")
-    }
-}
-
-class uias (val tests : Int, test2: String) {
-
-}
-
-fun main() {
-    val uais = uias(12,"")
-}
-
