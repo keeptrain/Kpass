@@ -1,6 +1,5 @@
-package com.keep.category.adapter
+package com.kpass.core.designsystem
 
-import android.R.layout
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
@@ -9,9 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.view.LayoutInflaterCompat
-import com.keep.password.feature.category.R
 
 class CustomCardView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -26,9 +22,7 @@ class CustomCardView @JvmOverloads constructor(
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
 
-
-
-        LayoutInflater.from(context).inflate(R.layout.empty_item,this, true)
+//        LayoutInflater.from(context).inflate(com.kpass.feature.category.R.layout.empty_item,this, true)
     }
 
     override fun addView(child: View?) {

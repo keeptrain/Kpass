@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.keep.password.core.designsystem"
+    namespace = "com.kpass.core.designsystem"
 }
 
 dependencies {

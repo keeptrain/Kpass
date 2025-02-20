@@ -1,6 +1,7 @@
-package com.keep.category
+package com.kpass.category
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +12,16 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.keep.category.dialog.BottomCategoryDialogFragment.BottomSheetState
-import com.keep.category.adapter.CategoryAdapter
-import com.keep.category.adapter.CategoryAdapterEvent
-import com.keep.category.adapter.CustomItemTouchHelperCallback
-import com.keep.category.dialog.BottomCategoryDialogFragment
-import com.keep.category.dialog.ReorderCategoryBottomDialog
+import com.keep.common.extension.collectFlow
+import com.keep.common.navigation.navigateWithAnimate
 import com.keep.model.Category
-import com.keep.password.feature.category.R
-import com.keep.password.feature.category.databinding.FragmentCategoryBinding
+import com.kpass.category.adapter.CategoryAdapter
+import com.kpass.category.adapter.CategoryAdapterEvent
+import com.kpass.category.adapter.CustomItemTouchHelperCallback
+import com.kpass.category.dialog.UpsertCategoryBottomDialog
+import com.kpass.category.navigation.CategoryNavigationNode
+import com.kpass.feature.category.R
+import com.kpass.feature.category.databinding.FragmentCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,21 +29,24 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CategoryFragment : Fragment(),CategoryAdapterEvent {
 
-    private lateinit var binding : FragmentCategoryBinding
+    private var _binding : FragmentCategoryBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel : CategoryViewModel by viewModels()
 
     @Inject
     lateinit var navController: NavController
 
-    private var categoryAdapter = CategoryAdapter(this@CategoryFragment)
+    private val categoryAdapter by lazy {
+        CategoryAdapter(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCategoryBinding.inflate(inflater, container, false)
+        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -49,15 +54,57 @@ class CategoryFragment : Fragment(),CategoryAdapterEvent {
         super.onViewCreated(view, savedInstanceState)
 
         setupToolbar()
-        setupRecyclerView()
-        initialAdapter()
+
+        collectFlow(viewModel.state, uiState)
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    override fun toDetailScreen(category: Category) {
+        navController.navigateWithAnimate(CategoryNavigationNode.DETAIL_DESTINATION,
+            Bundle().apply {
+                putParcelable(CATEGORY_EXTRA_KEY,category)
+            }
+        )
+    }
+
+    override fun reorderCategory(): Boolean {
+        return false
+    }
+
+    private val uiState: suspend (CategoryViewModel.UiState) -> Unit = { state ->
+        when (state.currentState) {
+            CategoryViewModel.STATE.INITIAL -> {
+               setupRecyclerView()
+                initialAdapter()
+                initUi()
+            }
+            CategoryViewModel.STATE.CREATE -> {
+
+            }
+            CategoryViewModel.STATE.REORDER -> {
+                Log.d("CategoryFragment", "REORDER")
+            }
+            CategoryViewModel.STATE.DETAIL -> {
+                Log.d("CategoryFragment", "DETAIL")
+            }
+        }
+    }
+
+    private fun initUi() {
+        with(binding) {
+            btnAdd.setOnClickListener {
+                showAddCategoryBottomSheet()
+            }
+        }
     }
 
     private fun setupToolbar() {
         with(binding) {
-            btnAdd.setOnClickListener {
-                addCategory()
-            }
 
             toolbarCategory.setNavigationOnClickListener {
                 findNavController().popBackStack()
@@ -66,7 +113,9 @@ class CategoryFragment : Fragment(),CategoryAdapterEvent {
             toolbarCategory.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_reorder -> {
-                        showReorderCategoryBottomSheet()
+                        navController.navigateWithAnimate(
+                            CategoryNavigationNode.REORDER_DESTINATION
+                        )
                     }
                 }
                 true
@@ -96,52 +145,17 @@ class CategoryFragment : Fragment(),CategoryAdapterEvent {
     }
 
     private fun showAddCategoryBottomSheet(category: Category? = null) {
-        val addCategoryDialogFragment = BottomCategoryDialogFragment().apply {
+        val addCategoryDialogFragment = UpsertCategoryBottomDialog().apply {
             arguments = Bundle().apply {
                 category?.let {
-                    putParcelable(BottomCategoryDialogFragment.Companion.CATEGORY_EXTRA_KEY, category)
-                    viewModel.insertCategory(category)
+                    putParcelable(CATEGORY_EXTRA_KEY, category)
                 }
             }
         }
-        addCategoryDialogFragment.switchState(BottomSheetState.INSERT)
         addCategoryDialogFragment.show(parentFragmentManager, "AddCategoryDialogFragment")
     }
 
-    private fun showMoreCategoryBottomSheet(category: Category) {
-        val moreCategoryDialogFragment = BottomCategoryDialogFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(BottomCategoryDialogFragment.Companion.CATEGORY_EXTRA_KEY, category)
-            }
-        }
-        moreCategoryDialogFragment.switchState(BottomSheetState.MORE)
-        moreCategoryDialogFragment.show(parentFragmentManager, "MoreCategoryDialogFragment")
+    companion object {
+        const val CATEGORY_EXTRA_KEY = "category_extra"
     }
-
-    private fun showReorderCategoryBottomSheet() {
-        val bottomSheet = ReorderCategoryBottomDialog(viewModel,categoryAdapter,this)
-        bottomSheet.show(parentFragmentManager, "ReorderCategoryBottomDialog")
-    }
-
-    override fun addCategory() {
-        showAddCategoryBottomSheet()
-    }
-
-    override fun updateCategory(category: Category) {
-        showMoreCategoryBottomSheet(category)
-    }
-
-    override fun deleteCategory(category: Category) {
-        showMoreCategoryBottomSheet(category)
-    }
-
-    override fun onMoreClick(category: Category) {
-        showMoreCategoryBottomSheet(category)
-    }
-
-//    override fun onSupportNavigateUp(): Boolean {
-//        onBackPressedDispatcher.onBackPressed()
-//        return true
-//    }
-
 }

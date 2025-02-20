@@ -1,21 +1,24 @@
-package com.keep.category
+package com.kpass.category
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.keep.category.adapter.CategoryListAdapterItem
 import com.keep.common.util.Event
 import com.keep.domain.ValidationResult
 import com.keep.domain.ui.category.CategoryValidationUseCase
 import com.keep.domain.usecase.category.GetCategoryUseCase
 import com.keep.model.Category
+import com.kpass.category.adapter.CategoryListAdapterItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 @HiltViewModel
 class CategoryViewModel @Inject constructor(
@@ -23,7 +26,8 @@ class CategoryViewModel @Inject constructor(
     private val validationUseCase: CategoryValidationUseCase,
 ): ViewModel() {
 
-    val categories: LiveData<List<Category>> = useCase.getCategory().asLiveData()
+    private val _state : MutableStateFlow<UiState> = MutableStateFlow(UiState())
+    val state : StateFlow<UiState> = _state.asStateFlow()
 
     private val _validationResult = MutableLiveData<Event<ValidationResult>>()
     val validationResult : LiveData<Event<ValidationResult>> = _validationResult
@@ -34,13 +38,7 @@ class CategoryViewModel @Inject constructor(
     private val _resetErrorEvent = MutableLiveData<Event<Unit>>()
     val resetErrorEvent: LiveData<Event<Unit>> = _resetErrorEvent
 
-    fun insertCategory(category: Category) {
-        useCase.insertCategory(category)
-    }
-
-    fun updateCategory(category: Category) {
-        useCase.updateCategory(category)
-    }
+    val categories: LiveData<List<Category>> = useCase.getCategory().asLiveData()
 
     suspend fun getLastPosition(): Int {
         return useCase.getLastPosition()
@@ -54,6 +52,22 @@ class CategoryViewModel @Inject constructor(
         useCase.deleteCategory(category)
     }
 
+    fun changeUiStateToDetail() {
+        _state.update {
+            it.copy(
+                currentState = STATE.DETAIL
+            )
+        }
+    }
+
+    fun changeUiStateToReorder() {
+        _state.update {
+            it.copy(
+                currentState = STATE.REORDER
+            )
+        }
+    }
+
     fun insertCategoryWithFieldsValidation(category: Category) {
         val result = validationUseCase.validateTitle(category.name)
         if (result.successful) {
@@ -65,10 +79,6 @@ class CategoryViewModel @Inject constructor(
             _validationResult.value = Event(result)
         }
     }
-
-//    fun updateCategoryWithFieldsValidation(category: Category) {
-//
-//    }
 
     fun isCategoryNameExists(categoryName : String, callback: (Boolean) -> Unit){
         viewModelScope.launch {
@@ -90,5 +100,16 @@ class CategoryViewModel @Inject constructor(
         }
         return array
     }
+
+    enum class STATE {
+        INITIAL,
+        CREATE,
+        DETAIL,
+        REORDER,
+    }
+
+    data class UiState(
+        val currentState : STATE = STATE.INITIAL,
+    )
 
 }

@@ -1,13 +1,12 @@
-package com.keep.category.adapter
+package com.kpass.category.adapter
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.keep.category.CategoryViewModel
-import com.keep.category.adapter.CategoryAdapter.CategoryViewHolder
 import com.keep.model.Category
+import com.kpass.category.CategoryViewModel
 import java.util.Collections
 
-open class CustomItemTouchHelperCallback (
+class CustomItemTouchHelperCallback (
     private val viewModel: CategoryViewModel
 ) : ItemTouchHelper.Callback() {
 
@@ -21,7 +20,7 @@ open class CustomItemTouchHelperCallback (
         var dragFlags = 0
 
         // Periksa apakah viewHolder memiliki tombol drag
-        if ((viewHolder as? CategoryViewHolder.CategoryItem)?.binding?.dragBtn?.isPressed == true) {
+        if ((viewHolder as? CategoryAdapter.CategoryViewHolder.CategoryItem)?.binding?.dragBtn?.isPressed == true) {
             dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         }
 

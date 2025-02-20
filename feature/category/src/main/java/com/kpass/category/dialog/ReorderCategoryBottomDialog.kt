@@ -1,4 +1,4 @@
-package com.keep.category.dialog
+package com.kpass.category.dialog
 
 import android.app.Dialog
 import android.graphics.Outline
@@ -9,33 +9,38 @@ import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import androidx.annotation.Px
 import androidx.core.view.updateLayoutParams
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.withStarted
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.keep.category.CategoryViewModel
-import com.keep.category.adapter.CategoryAdapter
-import com.keep.category.adapter.CategoryAdapterEvent
-import com.keep.category.adapter.CustomItemTouchHelperCallback
-import com.keep.password.feature.category.R
-import com.keep.password.feature.category.databinding.FragmentReorderBottomSheetDialogBinding
+import com.kpass.category.CategoryViewModel
+import com.kpass.category.adapter.CategoryAdapter
+import com.kpass.category.adapter.CustomItemTouchHelperCallback
+import com.kpass.category.adapter.NoCategoryAdapterEvent
+import com.kpass.feature.category.R
+import com.kpass.feature.category.databinding.FragmentReorderBottomSheetDialogBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
-class ReorderCategoryBottomDialog(
-    val viewModel: CategoryViewModel,
-    val categoryAdapter: CategoryAdapter,
-    val listener: CategoryAdapterEvent
-) : BottomSheetDialogFragment() {
+@AndroidEntryPoint
+class ReorderCategoryBottomDialog :
+    BottomSheetDialogFragment() {
 
     private var _binding: FragmentReorderBottomSheetDialogBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: CategoryViewModel by viewModels()
+
+    private val categoryAdapter: CategoryAdapter = CategoryAdapter(
+        NoCategoryAdapterEvent,
+    )
 
     private val customItemTouchHelperCallback by lazy {
         CustomItemTouchHelperCallback(viewModel)
@@ -44,6 +49,7 @@ class ReorderCategoryBottomDialog(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).apply {
             setFullScreen()
+            viewModel.changeUiStateToReorder()
         }
     }
 
@@ -62,7 +68,6 @@ class ReorderCategoryBottomDialog(
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = categoryAdapter
 
-        //val callback = CustomItemTouchHelperCallback(viewModel)
         val itemTouchHelper = ItemTouchHelper(customItemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
@@ -76,8 +81,13 @@ class ReorderCategoryBottomDialog(
             }
         }
 
-        setupToolbar(customItemTouchHelperCallback,recyclerView)
+        setupToolbar(customItemTouchHelperCallback)
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     fun Dialog.setFullScreen(
@@ -85,12 +95,14 @@ class ReorderCategoryBottomDialog(
         skipCollapsed: Boolean = true,
     ) {
         check(this is BottomSheetDialog) {
-            ReorderCategoryBottomDialog(viewModel,categoryAdapter,listener)
+            ReorderCategoryBottomDialog()
         }
 
         lifecycleScope.launch {
             withStarted {
-                val bottomSheetLayout = findViewById<ViewGroup>(com.google.android.material.R.id.design_bottom_sheet) ?: return@withStarted
+                val bottomSheetLayout = findViewById<ViewGroup>(com.google.android.material.R.id.design_bottom_sheet)
+                    ?: return@withStarted
+
                 with(bottomSheetLayout) {
                     updateLayoutParams {
                         height = ViewGroup.LayoutParams.MATCH_PARENT
@@ -112,24 +124,11 @@ class ReorderCategoryBottomDialog(
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 behavior.skipCollapsed = skipCollapsed
 
-                val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
-
-                    override fun onStateChanged(bottomSheet: View, newState: Int) {
-
-                    }
-
-                    override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                        // Do something for slide offset.
-                    }
-                }
-
-                // To add the callback:
-                behavior.addBottomSheetCallback(bottomSheetCallback)
             }
         }
     }
 
-    private fun setupToolbar(callback : CustomItemTouchHelperCallback,recyclerView: RecyclerView) {
+    private fun setupToolbar(callback : CustomItemTouchHelperCallback) {
         binding.appbar.apply {
             setNavigationOnClickListener {
                 onDestroy()

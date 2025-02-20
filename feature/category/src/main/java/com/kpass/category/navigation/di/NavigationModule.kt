@@ -1,7 +1,7 @@
-package com.keep.category.navigation.di
+package com.kpass.category.navigation.di
 
-import com.keep.category.navigation.CategoryNavigationNode
 import com.keep.common.navigation.NavigationNode
+import com.kpass.category.navigation.CategoryNavigationNode
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

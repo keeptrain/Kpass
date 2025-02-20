@@ -2,13 +2,9 @@
 <manifest xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application android:theme="@style/ThemeKpass">
-        <activity
-            android:name=".CategoryActivity"
-            android:exported="false"
-            android:enableOnBackInvokedCallback="true"
-            tools:targetApi="tiramisu" />
+    <application android:theme="@style/ThemeKpass"
+        android:enableOnBackInvokedCallback="true"
+        tools:targetApi="tiramisu">
     </application>
-
 
 </manifest>
