@@ -1,4 +1,4 @@
-package com.keep.category.navigation
+package com.kpass.category.navigation
 
 import androidx.navigation.NavController
 import com.keep.common.navigation.navigateWithAnimate

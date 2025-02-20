@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.keep.password.feature.category"
+    namespace = "com.kpass.feature.category"
 
     buildFeatures {
         viewBinding = true

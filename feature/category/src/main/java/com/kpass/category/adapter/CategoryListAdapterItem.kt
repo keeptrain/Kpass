@@ -1,8 +1,8 @@
-package com.keep.category.adapter
+package com.kpass.category.adapter
 
 import com.keep.model.Category
 
-sealed class CategoryListAdapterItem (val viewType : EnumCategoryListAdapterViewType){
+sealed class CategoryListAdapterItem (val viewType : EnumCategoryListAdapterViewType) {
     class CategoryItem(val category: Category) : CategoryListAdapterItem(EnumCategoryListAdapterViewType.CATEGORY)
     class EmptyItem : CategoryListAdapterItem(EnumCategoryListAdapterViewType.EMPTY)
 }
