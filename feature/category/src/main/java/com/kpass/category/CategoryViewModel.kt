@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoryViewModel @Inject constructor(
-    private val useCase: GetCategoryUseCase,
+    private val useCase: dagger.Lazy<GetCategoryUseCase>,
     private val validationUseCase: CategoryValidationUseCase,
 ): ViewModel() {
 
@@ -38,26 +38,17 @@ class CategoryViewModel @Inject constructor(
     private val _resetErrorEvent = MutableLiveData<Event<Unit>>()
     val resetErrorEvent: LiveData<Event<Unit>> = _resetErrorEvent
 
-    val categories: LiveData<List<Category>> = useCase.getCategory().asLiveData()
+    val categories: LiveData<List<Category>> = useCase.get().getCategory().asLiveData()
+
+    private val _categoryUpdate = MutableStateFlow<Category?>(null)
+    val categoryUpdate = _categoryUpdate.asStateFlow()
 
     suspend fun getLastPosition(): Int {
-        return useCase.getLastPosition()
+        return useCase.get().getLastPosition()
     }
 
     fun updateCategoryPosition(category: List<Category>) {
-        useCase.updateCategoryPosition(category)
-    }
-
-    fun deleteCategory(category: Category) {
-        useCase.deleteCategory(category)
-    }
-
-    fun changeUiStateToDetail() {
-        _state.update {
-            it.copy(
-                currentState = STATE.DETAIL
-            )
-        }
+        useCase.get().updateCategoryPosition(category)
     }
 
     fun changeUiStateToReorder() {
@@ -72,7 +63,7 @@ class CategoryViewModel @Inject constructor(
         val result = validationUseCase.validateTitle(category.name)
         if (result.successful) {
             viewModelScope.launch {
-                useCase.insertCategory(category)
+                useCase.get().insertCategory(category)
                 _insertResult.value = Event(true)
             }
         } else {
@@ -82,7 +73,7 @@ class CategoryViewModel @Inject constructor(
 
     fun isCategoryNameExists(categoryName : String, callback: (Boolean) -> Unit){
         viewModelScope.launch {
-            val exists = useCase.getCategory().firstOrNull()?.any {
+            val exists = useCase.get().getCategory().firstOrNull()?.any {
                 it.name.equals(categoryName, ignoreCase = true)
             } == true
             callback(exists)
@@ -92,7 +83,7 @@ class CategoryViewModel @Inject constructor(
     fun generateCategoryAdapterList(list: List<Category>): List<CategoryListAdapterItem> {
         val array: MutableList<CategoryListAdapterItem> = mutableListOf()
         if (list.isEmpty()) {
-            listOf(CategoryListAdapterItem.EmptyItem())
+            array.add(CategoryListAdapterItem.EmptyItem())
         } else {
             list.forEach {
                 array.add(CategoryListAdapterItem.CategoryItem(it))
@@ -104,12 +95,13 @@ class CategoryViewModel @Inject constructor(
     enum class STATE {
         INITIAL,
         CREATE,
-        DETAIL,
         REORDER,
     }
 
     data class UiState(
         val currentState : STATE = STATE.INITIAL,
+        val category: Category? = null,
+        val categoryName: String? = null
     )
 
 }

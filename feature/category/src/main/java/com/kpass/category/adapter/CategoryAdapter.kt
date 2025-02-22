@@ -23,10 +23,9 @@ class CategoryAdapter (
                     eventListener,
                 )
             }
-            else -> {
-                return CategoryViewHolder.EmptyItem(
+            EnumCategoryListAdapterViewType.EMPTY -> {
+                CategoryViewHolder.EmptyItem(
                     EmptyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-//                    if (eventListener != null) eventListener else throw NullPointerException(),
                 )
             }
         }
@@ -42,6 +41,10 @@ class CategoryAdapter (
         is CategoryViewHolder.EmptyItem -> {
             holder.bind()
         }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return super.getItem(position).viewType.ordinal
     }
 
     sealed class CategoryViewHolder(
@@ -72,10 +75,11 @@ class CategoryAdapter (
         }
 
         class EmptyItem(
-            binding: EmptyItemBinding,
+            val binding: EmptyItemBinding,
         ) : CategoryViewHolder(binding) {
             fun bind() {
-                TODO()
+                with(binding) {
+                }
             }
         }
     }
