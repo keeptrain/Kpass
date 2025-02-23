@@ -46,6 +46,15 @@ class UpsertCategoryBottomDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.categories.observe(viewLifecycleOwner) { listCategory ->
+            val categoryMap = listCategory.associateBy { it.id }
+            category?.id?.let { id ->
+                categoryMap[id]?.let { matchedCategory ->
+                    setupEdtObserver(matchedCategory)
+                }
+            }
+        }
         setupInsertView()
         setupObserver()
         setupListener()
@@ -63,25 +72,28 @@ class UpsertCategoryBottomDialog : BottomSheetDialogFragment() {
 
         val titleText = category?.let {
             R.string.title_edit_category
-        } ?: R.string.title_create_category
+        } ?: run {
+            R.string.title_create_category
+        }
+
+        insertBinding.tvTitleDialog.text = requireContext().getString(titleText)
 
         val hintEditLayout = category?.let {
             R.string.hint_edit_category
         } ?: R.string.hint_create_category
 
-        insertBinding.tvTitleDialog.text = requireContext().getString(titleText)
-
         insertBinding.edlCategory.hint = requireContext().getString(hintEditLayout)
-
-        category?.let {
-            insertBinding.edtCategory.setText(it.name)
-        }
 
         val addButtonText = category?.let {
             com.keep.password.core.common.R.string.save
         } ?: com.keep.password.core.common.R.string.add
+
         insertBinding.btnAdd.text = requireContext().getString(addButtonText)
 
+    }
+
+    private fun setupEdtObserver(category: Category) {
+        insertBinding.edtCategory.setText(category.name)
     }
 
     private fun setupObserver() {
@@ -94,7 +106,7 @@ class UpsertCategoryBottomDialog : BottomSheetDialogFragment() {
             insertResult.observe(viewLifecycleOwner) { event ->
                 event.getContentIfNotHandled()?.let { result ->
                     if (result) {
-                        dismissAllowingStateLoss()
+                        dismissNow()
                     }
                 }
             }
@@ -114,16 +126,9 @@ class UpsertCategoryBottomDialog : BottomSheetDialogFragment() {
                     if (exist) {
                         insertBinding.edlCategory.error = getString(R.string.exist_category)
                     } else {
-                        category?.let {
-                            val categoryCopy = it.copy(name = categoryName)
-                            if (category != categoryCopy) {
-                                viewModel.insertCategoryWithFieldsValidation(categoryCopy)
-                            }
-                        } ?: viewModel.insertCategoryWithFieldsValidation(
-                            Category(
-                                name = categoryName, position = lastPosition
-                            )
-                        )
+                        val category = category?.copy(name = categoryName)
+                            ?: Category(name = categoryName, position = lastPosition)
+                        viewModel.insertCategoryWithFieldsValidation(category)
                     }
                 }
             }

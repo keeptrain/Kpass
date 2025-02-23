@@ -1,12 +1,13 @@
 package com.kpass.category.detail
 
 import android.os.Build
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.keep.model.Category
 import com.kpass.category.CategoryFragment.Companion.CATEGORY_EXTRA_KEY
@@ -21,14 +22,16 @@ class CategoryDetailFragment : Fragment() {
     private var _binding: FragmentCategoryDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: CategoryDetailViewModel by viewModels()
+    private val viewModel by lazy {
+        ViewModelProvider(requireActivity())[CategoryDetailViewModel::class.java]
+    }
 
     @Suppress("DEPRECATION")
     private val category : Category? by lazy {
         if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(CATEGORY_EXTRA_KEY,Category::class.java)
+            arguments?.getParcelable(CATEGORY_DETAIL_EXTRA_KEY,Category::class.java)
         } else {
-            arguments?.getParcelable(CATEGORY_EXTRA_KEY)
+            arguments?.getParcelable(CATEGORY_DETAIL_EXTRA_KEY)
         }
     }
 
@@ -43,10 +46,15 @@ class CategoryDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initListeners()
-
-        setupToolbar(category)
-
+        viewModel.categories.observe(viewLifecycleOwner) { listCategory ->
+            val categoryMap = listCategory.associateBy { it.id }
+            category?.id?.let { id ->
+                categoryMap[id]?.let { matchedCategory ->
+                    setupToolbar(matchedCategory)
+                    initListeners(matchedCategory)
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -54,7 +62,7 @@ class CategoryDetailFragment : Fragment() {
         _binding = null
     }
 
-    private fun setupToolbar(category: Category?) {
+    private fun setupToolbar(category: Category) {
         with(binding) {
 
             toolbarCategory.setNavigationOnClickListener {
@@ -63,7 +71,7 @@ class CategoryDetailFragment : Fragment() {
 
             toolbarCategory.apply {
 
-                title = category?.name
+                title = category.name
 
                 menu.findItem(R.id.action_reorder).isVisible = false
                 menu.findItem(R.id.action_edit).isVisible = true
@@ -76,7 +84,7 @@ class CategoryDetailFragment : Fragment() {
                         showUpsertCategoryBottomSheet(category)
                     }
                     R.id.action_delete -> {
-                        if (category!=null) {
+                        if (true) {
                             viewModel.deleteCategory(category)
                             findNavController().popBackStack()
                         }
@@ -87,21 +95,17 @@ class CategoryDetailFragment : Fragment() {
         }
     }
 
-    private fun initListeners() {
+    private fun initListeners(category: Category) {
         with(binding) {
-            tvCategoryName.text = category?.name
+            tvCategoryName.text = category.name
         }
     }
 
     private fun showUpsertCategoryBottomSheet(category: Category? = null) {
         val addCategoryDialogFragment = UpsertCategoryBottomDialog().apply {
-            arguments = Bundle().apply {
-                category?.let {
-                    putParcelable(CATEGORY_EXTRA_KEY, category)
-                }
-            }
+            arguments = bundleOf(CATEGORY_EXTRA_KEY to category)
         }
-        addCategoryDialogFragment.show(parentFragmentManager, "EditCategoryDialogFragment")
+        addCategoryDialogFragment.show(childFragmentManager, "EditCategoryDialogFragment")
     }
 
     companion object {

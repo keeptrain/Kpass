@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +19,7 @@ import com.keep.model.Category
 import com.kpass.category.adapter.CategoryAdapter
 import com.kpass.category.adapter.CategoryAdapterEvent
 import com.kpass.category.adapter.CustomItemTouchHelperCallback
-import com.kpass.category.dialog.UpsertCategoryBottomDialog
+import com.kpass.category.detail.CategoryDetailFragment.Companion.CATEGORY_DETAIL_EXTRA_KEY
 import com.kpass.category.navigation.CategoryNavigationNode
 import com.kpass.feature.category.R
 import com.kpass.feature.category.databinding.FragmentCategoryBinding
@@ -65,10 +66,9 @@ class CategoryFragment : Fragment(),CategoryAdapterEvent {
     }
 
     override fun toDetailScreen(category: Category) {
-        navController.navigateWithAnimate(CategoryNavigationNode.DETAIL_DESTINATION,
-            Bundle().apply {
-                putParcelable(CATEGORY_EXTRA_KEY,category)
-            }
+        findNavController().navigateWithAnimate(
+            CategoryNavigationNode.DETAIL_DESTINATION,
+            bundleOf(CATEGORY_DETAIL_EXTRA_KEY to category)
         )
     }
 
@@ -89,16 +89,13 @@ class CategoryFragment : Fragment(),CategoryAdapterEvent {
             CategoryViewModel.STATE.REORDER -> {
                 Log.d("CategoryFragment", "REORDER")
             }
-            CategoryViewModel.STATE.DETAIL -> {
-                Log.d("CategoryFragment", "DETAIL")
-            }
         }
     }
 
     private fun initUi() {
         with(binding) {
             btnAdd.setOnClickListener {
-                showAddCategoryBottomSheet()
+                findNavController().navigate(CategoryNavigationNode.BOTTOM_DESTINATION)
             }
         }
     }
@@ -113,9 +110,10 @@ class CategoryFragment : Fragment(),CategoryAdapterEvent {
             toolbarCategory.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_reorder -> {
-                        navController.navigateWithAnimate(
+                        findNavController().navigate(
                             CategoryNavigationNode.REORDER_DESTINATION
                         )
+
                     }
                 }
                 true
@@ -142,17 +140,6 @@ class CategoryFragment : Fragment(),CategoryAdapterEvent {
                 )
             }
         }
-    }
-
-    private fun showAddCategoryBottomSheet(category: Category? = null) {
-        val addCategoryDialogFragment = UpsertCategoryBottomDialog().apply {
-            arguments = Bundle().apply {
-                category?.let {
-                    putParcelable(CATEGORY_EXTRA_KEY, category)
-                }
-            }
-        }
-        addCategoryDialogFragment.show(parentFragmentManager, "AddCategoryDialogFragment")
     }
 
     companion object {
