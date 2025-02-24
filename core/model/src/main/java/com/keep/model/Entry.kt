@@ -1,10 +1,11 @@
 package com.keep.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Entry(
-    val id: String,
+    val id: Int? = null,
     val title: String,
-    val categoryId: String,
-    val username: String,
-    val password: String,
-    val website: String,
-)
+    val categoryId: Int,
+) : Parcelable

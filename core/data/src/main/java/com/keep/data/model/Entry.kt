@@ -7,7 +7,4 @@ fun Entry.toEntity() = EntryEntity(
     id,
     title,
     categoryId,
-    username,
-    password,
-    website
 )
