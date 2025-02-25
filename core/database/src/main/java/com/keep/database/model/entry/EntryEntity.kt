@@ -1,11 +1,10 @@
-package com.keep.database.model
+package com.keep.database.model.entry
 
 import androidx.room.ColumnInfo
-import androidx.room.Database
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.keep.model.Category
+import com.keep.database.model.CategoryEntity
 import com.keep.model.Entry
 
 @Entity(
@@ -19,32 +18,19 @@ import com.keep.model.Entry
         )
     ])
 data class EntryEntity (
-
     @PrimaryKey
-    @ColumnInfo("entryId")
-    val entryId: String,
+    @ColumnInfo("id")
+    val id: Int?,
 
     @ColumnInfo("title")
     val title: String,
 
     @ColumnInfo("categoryId", index = true)
-    val categoryId: String,
-
-    @ColumnInfo(name = "username")
-    val username: String,
-
-    @ColumnInfo(name = "password")
-    val password: String,
-
-    @ColumnInfo(name = "website")
-    val website: String,
-)
+    val categoryId: Int,
+    )
 
 fun EntryEntity.toExternalModel() = Entry (
-    id = entryId,
-    categoryId = categoryId,
+    id = id,
     title = title,
-    username = username,
-    password = password,
-    website = website
+    categoryId = categoryId,
 )
