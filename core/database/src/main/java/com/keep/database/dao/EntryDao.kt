@@ -1,18 +1,21 @@
 package com.keep.database.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.keep.database.model.EntryEntity
+import androidx.room.Upsert
+import com.keep.database.model.entry.EntryEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EntryDao {
 
-    @Query("SELECT categoryId FROM entry")
-    suspend fun getCategoryList() : Flow<List<EntryEntity>>
+    @Query("SELECT * FROM entry")
+    fun getEntryEntity() : Flow<List<EntryEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertEntry(entryEntities: EntryEntity)
+    @Upsert(entity = EntryEntity::class)
+    suspend fun upsertEntry(entryEntity: EntryEntity)
+
+    @Query("DELETE FROM entry WHERE id = :id")
+    suspend fun deleteEntry(id: Int)
+
 }
