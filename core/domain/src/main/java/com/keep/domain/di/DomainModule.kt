@@ -4,11 +4,12 @@ import com.keep.domain.ui.category.CategoryValidationUseCase
 import com.keep.domain.ui.category.CategoryValidationUseCaseImpl
 import com.keep.domain.usecase.category.GetCategoryUseCase
 import com.keep.domain.usecase.category.GetCategoryUseCaseImpl
+import com.keep.domain.usecase.entry.GetEntryUseCase
+import com.keep.domain.usecase.entry.GetEntryUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -23,4 +24,10 @@ abstract class DomainModule {
     abstract fun bindValidationCategoryUseCase(
         categoryValidationUseCaseImpl: CategoryValidationUseCaseImpl
     ) : CategoryValidationUseCase
+
+    @Binds
+    abstract fun bindGetEntryUseCase(
+        entryUseCaseImpl: GetEntryUseCaseImpl
+    ) : GetEntryUseCase
+
 }
