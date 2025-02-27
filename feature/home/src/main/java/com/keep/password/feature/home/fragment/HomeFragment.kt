@@ -12,6 +12,8 @@ import com.keep.model.Category
 import com.keep.password.core.common.R
 import com.keep.password.feature.home.HomeViewModel
 import com.keep.password.feature.home.databinding.FragmentHomeBinding
+import com.keep.password.feature.home.navigation.HomeNavigationNode
+import com.kpass.newentry.shared.NewEntryFeatureCommunicator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.collections.forEach
@@ -27,6 +29,9 @@ class HomeFragment : Fragment() {
 
     @Inject
     lateinit var navController: NavController
+
+    @Inject
+    lateinit var newEntryFeatureCommunicator: NewEntryFeatureCommunicator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +60,14 @@ class HomeFragment : Fragment() {
         val appBar = binding.appBarMain
         val searchBar = appBar.searchBar
         val buttonNew = appBar.buttonNew
+
+        buttonNew.setOnClickListener {
+            newEntryFeatureCommunicator.getFeature(
+                NewEntryFeatureCommunicator.NewEntryArgs(
+                    HomeNavigationNode.ROUTE
+                )
+            )
+        }
 
         setupChipGroup()
     }

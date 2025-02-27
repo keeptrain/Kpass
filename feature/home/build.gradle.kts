@@ -11,5 +11,6 @@ android {
 }
 
 dependencies {
+    implementation(projects.feature.newentry.shared)
     implementation(projects.feature.category.shared)
 }
