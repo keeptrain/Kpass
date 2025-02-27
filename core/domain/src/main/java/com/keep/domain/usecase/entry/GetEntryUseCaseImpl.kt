@@ -8,15 +8,13 @@ import javax.inject.Inject
 class GetEntryUseCaseImpl @Inject constructor(
     private val repository: EntryRepository
 ) : GetEntryUseCase {
-    override fun getEntry(): List<Entry> {
-        TODO("Not yet implemented")
+
+    override fun getEntry(): Flow<List<Entry>> {
+        return repository.getEntry()
     }
 
-    /*override suspend fun getCategoryList(): Flow<List<Entry>> {
-        return repository.getCategoryList()
-    }*/
-
-    override suspend fun insertEntry(entry: Entry) {
-        repository.insertEntry(entry)
+    override fun upsertEntry(entry: Entry) {
+        repository.upsertEntry(entry)
     }
+
 }
