@@ -3,6 +3,7 @@ package com.keep.database.di
 import com.keep.database.KpsDatabase
 import com.keep.database.dao.CategoryDao
 import com.keep.database.dao.EntryDao
+import com.keep.database.dao.EntryFieldDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,4 +22,10 @@ internal object DaosModule {
     fun providesCategoryDao(
         database: KpsDatabase
     ): CategoryDao = database.categoryDao()
+
+    @Provides
+    fun providesEntryFieldDao(
+        database: KpsDatabase
+    ): EntryFieldDao = database.entryFieldDao()
+
 }
