@@ -37,7 +37,6 @@ class CategoryAdapter (
                 getItem(position) as CategoryListAdapterItem.CategoryItem
             )
         }
-
         is CategoryViewHolder.EmptyItem -> {
             holder.bind()
         }
@@ -55,20 +54,22 @@ class CategoryAdapter (
             private val eventListener: CategoryAdapterEvent,
         ) : CategoryViewHolder(binding) {
 
+            val dragBtn = binding.dragBtn
+
             fun bind(categoryItem: CategoryListAdapterItem.CategoryItem) {
                 with(binding) {
                     tvCategory.apply {
                         text = categoryItem.category.name
                     }
+                }
 
-                    if (eventListener.reorderCategory() == true) {
-                        dragBtn.show()
-                    }  else {
-                        dragBtn.hide()
-                        root.setOnClickListener {
-                            eventListener.toDetailScreen(categoryItem.category)
-                            true
-                        }
+                if (eventListener.reorderCategory() == true) {
+                    dragBtn.show()
+                }  else {
+                    dragBtn.hide()
+                    binding.root.setOnClickListener {
+                        eventListener.toDetailScreen(categoryItem.category)
+                        true
                     }
                 }
             }
