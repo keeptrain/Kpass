@@ -1,10 +1,10 @@
 package com.keep.data.model
 
-import com.keep.database.model.entry.EntryFieldsEntity
-import com.keep.model.EntryFields
+import com.keep.database.model.entry.EntryFieldEntity
+import com.keep.model.EntryField
 
-fun EntryFields.toEntity() = EntryFieldsEntity(
+fun EntryField.toEntity() = EntryFieldEntity(
     entryId = entryId,
-    fieldName = fieldName,
+    fieldId = fieldId,
     fieldValue = fieldValue
 )

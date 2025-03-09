@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Relation
 import com.keep.model.Entry
-import com.keep.model.EntryFields
+import com.keep.model.EntryField
 
 @Entity(tableName = "entry_with_fields")
 data class EntryWithFieldsEntity (
@@ -13,7 +13,7 @@ data class EntryWithFieldsEntity (
     @Relation(
         parentColumn = "id",
         entityColumn = "entryId")
-    val fields: List<EntryFields>
+    val fields: List<EntryField>
 )
 
 fun EntryWithFieldsEntity.toExternalModel() = EntryWithFieldsEntity(

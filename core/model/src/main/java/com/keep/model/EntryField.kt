@@ -1,7 +1,7 @@
 package com.keep.model
 
-data class EntryFields(
+data class EntryField(
     val entryId: Int,
-    val fieldName: String,
+    val fieldId: Int,
     val fieldValue: String,
 )
