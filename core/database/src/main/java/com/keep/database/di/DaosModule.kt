@@ -4,6 +4,7 @@ import com.keep.database.KpsDatabase
 import com.keep.database.dao.CategoryDao
 import com.keep.database.dao.EntryDao
 import com.keep.database.dao.EntryFieldDao
+import com.keep.database.dao.FieldDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,8 +25,12 @@ internal object DaosModule {
     ): CategoryDao = database.categoryDao()
 
     @Provides
+    fun providesFieldDao(
+        database: KpsDatabase
+    ) : FieldDao = database.fieldDao()
+
+    @Provides
     fun providesEntryFieldDao(
         database: KpsDatabase
     ): EntryFieldDao = database.entryFieldDao()
-
 }

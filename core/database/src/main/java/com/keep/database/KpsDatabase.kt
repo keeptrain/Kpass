@@ -5,19 +5,23 @@ import androidx.room.RoomDatabase
 import com.keep.database.dao.CategoryDao
 import com.keep.database.dao.EntryDao
 import com.keep.database.dao.EntryFieldDao
+import com.keep.database.dao.FieldDao
 import com.keep.database.model.CategoryEntity
+import com.keep.database.model.FieldEntity
 import com.keep.database.model.entry.EntryEntity
-import com.keep.database.model.entry.EntryFieldsEntity
+import com.keep.database.model.entry.EntryFieldEntity
 
 @Database(entities = [
     EntryEntity::class,
     CategoryEntity::class,
-    EntryFieldsEntity::class],
+    FieldEntity::class,
+    EntryFieldEntity::class],
     version = 1,
     exportSchema = false
 )
-abstract class KpsDatabase : RoomDatabase() {
+internal abstract class KpsDatabase : RoomDatabase() {
     abstract fun entryDao(): EntryDao
     abstract fun categoryDao(): CategoryDao
+    abstract fun fieldDao(): FieldDao
     abstract fun entryFieldDao(): EntryFieldDao
 }
