@@ -21,8 +21,8 @@ class EntryRepositoryImpl @Inject constructor(
 ) : EntryRepository {
 
     override fun getEntry(): Flow<List<Entry>> {
-        return entryDao.getEntryEntity().map {
-            it.map {
+        return entryDao.getEntryEntity().map { listEntry->
+            listEntry.map {
                 it.toExternalModel()
             }
         }.flowOn(ioDispatcher)

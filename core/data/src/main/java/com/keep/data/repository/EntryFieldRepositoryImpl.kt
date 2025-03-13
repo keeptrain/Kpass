@@ -6,7 +6,7 @@ import com.keep.database.Dispatcher
 import com.keep.database.dao.EntryFieldDao
 import com.keep.database.model.entry.toExternalModel
 import com.keep.domain.repository.EntryFieldRepository
-import com.keep.model.EntryFields
+import com.keep.model.EntryField
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -20,17 +20,17 @@ class EntryFieldRepositoryImpl @Inject constructor (
     private val entryFieldDao: EntryFieldDao
 ) : EntryFieldRepository {
 
-    override fun getEntryField(): Flow<List<EntryFields>> {
-        return entryFieldDao.getEntryFields().map {
-            it.map {
+    override fun getEntryField(): Flow<List<EntryField>> {
+        return entryFieldDao.getEntryFields().map { listEntryFields ->
+            listEntryFields.map {
                 it.toExternalModel()
             }
         }.flowOn(ioDispatcher)
     }
 
-    override fun upsertEntryField(entryFields: EntryFields) {
+    override fun upsertEntryField(entryField: EntryField) {
         CoroutineScope(ioDispatcher).launch {
-            entryFieldDao.upsertEntryFields(entryFields.toEntity())
+            entryFieldDao.upsertEntryFields(entryField.toEntity())
         }
     }
 }
