@@ -10,8 +10,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.keep.model.Entry
 import com.keep.password.feature.newentry.databinding.FragmentNewEntryBinding
+import com.kpass.newentry.adapter.EntryFieldAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +23,10 @@ class NewEntryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: NewEntryViewModel by viewModels()
+
+    private val entryFieldAdapter by lazy {
+        EntryFieldAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +43,7 @@ class NewEntryFragment : Fragment() {
         setupToolbar()
 
         chooseCategory()
-
+        setupRecyclerView()
     }
 
     override fun onDestroyView() {
@@ -70,9 +76,6 @@ class NewEntryFragment : Fragment() {
         } else {
             Toast.makeText(requireContext(),"Cannot null", Toast.LENGTH_SHORT).show()
         }
-
-
-
     }
 
     private fun chooseCategory() {
@@ -96,11 +99,14 @@ class NewEntryFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     viewModel.setSelectedCategory(null)
                 }
-
             }
         }
-
     }
 
-
+    private fun setupRecyclerView() {
+        binding.rvEntryFields.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = entryFieldAdapter
+        }
+    }
 }
